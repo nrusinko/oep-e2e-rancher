@@ -3,7 +3,7 @@
 pod() {
 
 ## Cloning oep-e2e-rancher repo
-echo "Deploying Director On-Prem *************"
+echo -e "Deploying Director On-Prem *************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-deploy/dop node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$DOCKER_USERNAME'"' '"'$DOCKER_PASSWORD'"''
 }
 
@@ -18,7 +18,7 @@ DOCKER_PASSWORD=$4
 ##          Prerequisites          ##
 #####################################
 
-echo "[ Running Prerequisites ]-------------------------------------\n";
+echo -e "[ Running Prerequisites ]-------------------------------------\n";
 
 DOP_URL=$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | head -n 1)
 
@@ -26,7 +26,7 @@ DOP_URL=$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | head -n 1)
 ##           Deploy DOP            ##
 #####################################
 
-echo "\n[ Cloning director-charts-internal repo ]\n"
+echo -e "\n[ Cloning director-charts-internal repo ]--------------------\n"
 
 git clone https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/mayadata-io/director-charts-internal.git
 
