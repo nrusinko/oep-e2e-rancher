@@ -63,7 +63,7 @@ cd ..
 helm install --name dop .
 
 # Dump Director On-Prem pods
-echo "\n[ Dumping Director On-Prem components ]\n"
+echo -e "\n[ Dumping Director On-Prem components ]\n"
 kubectl get pod
 }
 
