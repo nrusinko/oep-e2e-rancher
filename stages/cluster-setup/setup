@@ -19,5 +19,5 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone h
 else
 echo "All nodes are not ready"
 echo "******Cluster is in Unhealthy state*******"
-exit;
+exit 1;
 fi
