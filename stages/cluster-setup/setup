@@ -1,5 +1,25 @@
 #!/bin/bash
 
+time="$(TZ=IST date)"
+current_time=$time
+echo $current_time
+
+echo "***Checking if cluster is Engaged or not***"
+
+state="sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'ls | grep oep-e2e-rancher'"
+cluster_state=$(eval $state)
+
+while [ "${cluster_state}" == "oep-e2e-rancher" ]; do
+  echo "***Cluster is Engaged***"
+  wait=1
+  cluster_state=$(eval $state)
+  sleep 30
+done
+
+if [ "$wait" == "1" ]; then
+sleep 120
+fi
+
 echo "*************************Checking the Cluster's Health********************"
 
 echo "Checking for the number of nodes in ready state*******************************"
