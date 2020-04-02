@@ -68,7 +68,7 @@ do
 done
 
 echo "Waiting for the coverage CR to get populated"
-sleep 10
+sleep 20
 
 kubectl get pcover $e2e_coverage_cr -n $COVERAGE_NAMESPACE -oyaml
 kubectl get pcover -n $COVERAGE_NAMESPACE -o=jsonpath='{.items[0].result.coverage}{"\n"}'
