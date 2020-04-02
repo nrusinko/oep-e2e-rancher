@@ -60,7 +60,7 @@ done
 # Fetching coverage percentage from custom resource
 e2e_coverage_cr=$(kubectl get pcover -n $COVERAGE_NAMESPACE --no-headers | awk '{print $1}')
 
-while [[ $e2e_coverage_cr == "No resources found." ]]
+while [[ $e2e_coverage_cr == "" ]]
 do
   echo "Waiting for the pcover CR to be ready"
   sleep 10
@@ -68,7 +68,7 @@ do
 done
 
 echo "Waiting for the coverage CR to get populated"
-sleep 20
+sleep 10
 
 kubectl get pcover $e2e_coverage_cr -n $COVERAGE_NAMESPACE -oyaml
 kubectl get pcover -n $COVERAGE_NAMESPACE -o=jsonpath='{.items[0].result.coverage}{"\n"}'
