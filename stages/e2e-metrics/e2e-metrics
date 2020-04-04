@@ -3,7 +3,7 @@
 pod() {
 
 ## Cloning oep-e2e-rancher repo
-echo "Cleaning up the cluster *************"
+echo "********** Running e2e-metrics *************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/e2e-metrics/e2e-metrics node '"'$CI_PIPELINE_ID'"' '"'$CI_JOB_ID'"''
 }
 
