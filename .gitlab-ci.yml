@@ -2,6 +2,7 @@
 
 stages:
     - CLUSTER-SETUP
+    - PRE-REQUISITES
     - INFRA-SETUP
     - E2E-METRICS                ## This stage is fixed and should not be changed
     - CLUSTER-CLEANUP
@@ -16,7 +17,7 @@ cluster-create:
 
 pre-requisites:
   image: harshshekhar15/gitlab-job:v2
-  stage: INFRA-SETUP
+  stage: PRE-REQUISITES
   dependencies:
     - cluster-create
   script:
