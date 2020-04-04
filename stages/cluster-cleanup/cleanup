@@ -29,7 +29,10 @@ sed -i -e "s/auto1/$master_name/g" \
 sed -i -e 's/snapshot_name: "oc-cluster"/snapshot_name: "'$SNAPSHOT_NAME'"/g' \
 -e 's/esx_ip: "10.12.1.1"/esx_ip: "10.42.1.1"/g' k8s/on-prem/openshift-installer/vars.yml
 
-ansible-playbook k8s/on-prem/openshift-installer/revert_cluster_state.yml 
+ansible-playbook k8s/on-prem/openshift-installer/revert_cluster_state.yml
+
+## Add sleep so that cluster gets ready for next pipeline
+sleep 10
 
 ## Removimg oep-e2e-rancher repo
 cd  && rm -rf oep-e2e-rancher
