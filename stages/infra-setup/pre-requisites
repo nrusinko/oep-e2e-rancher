@@ -17,6 +17,12 @@ git clone https://github.com/mayadata-io/oep-e2e.git
 kubectl apply -f oep-e2e/litmus/prerequisite/rbac.yaml
 kubectl apply -f oep-e2e/litmus/prerequisite/crds.yaml
 
+URL=http://$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | tail -n 1)
+echo "URL to access DOP: $URL"
+
+# Create a configmap from URL
+kubectl create configmap config --from-literal=url=$URL -n litmus
+
 echo -e "\n************ Finished Prerequisites ************"
 
 bash utils/e2e-cr jobname:pre-requisites jobphase:Completed

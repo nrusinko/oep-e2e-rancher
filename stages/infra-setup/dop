@@ -17,6 +17,7 @@ DOCKER_PASSWORD=$4
 bash utils/e2e-cr jobname:dop jobphase:Waiting
 bash utils/e2e-cr jobname:dop jobphase:Running
 bash utils/e2e-cr jobname:pre-requisites jobphase:Waiting
+bash utils/e2e-cr jobname:basic-sanity-checks jobphase:Waiting
 
 #####################################
 ##          Prerequisites          ##
