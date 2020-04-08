@@ -3,7 +3,6 @@
 stages:
     - CLUSTER-SETUP
     - INFRA-SETUP
-    - E2E-METRICS                ## This stage is fixed and should not be changed
     - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
@@ -45,12 +44,12 @@ basic-sanity-checks:
 e2e-metrics:
   when: always
   image: harshshekhar15/gitlab-job:v2
-  stage: E2E-METRICS
+  stage: CLUSTER-CLEANUP
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/e2e-metrics/e2e-metrics
-    - ./stages/e2e-metrics/e2e-metrics
+    - chmod 755 ./stages/cluster-cleanup/e2e-metrics
+    - ./stages/cluster-cleanup/e2e-metrics
 
 ## Revert the cluster to previous snapshot
 cluster-cleanup:

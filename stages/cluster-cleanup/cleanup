@@ -9,6 +9,9 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 
 node() {
 
+bash utils/pooling jobname:e2e-metrics
+bash utils/e2e-cr jobname:cluster-cleanup jobphase:Running
+
 master_name=$(echo $1)
 worker1_name=$(echo $2)
 worker2_name=$(echo $3)
@@ -52,7 +55,7 @@ echo "Rebooting VM : $VM4_IP"
 sshpass -p $VM_PASS ssh $VM_USER@$VM4_IP 'reboot' > /dev/null 2>&1 &
 
 ## Add sleep so that the cluster becomes available for next pipeline
-sleep 30
+sleep 50
 
 ## Removimg oep-e2e-rancher repo
 echo -e "\n[ Removing oep-e2e-rancher repo ]--------------------------------\n"
