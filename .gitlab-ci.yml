@@ -2,37 +2,36 @@
 
 stages:
     - CLUSTER-SETUP
-    - PRE-REQUISITES
     - INFRA-SETUP
     - E2E-METRICS                ## This stage is fixed and should not be changed
     - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
 cluster-create:
-    image: harshshekhar15/gitlab-job:v2
-    stage: CLUSTER-SETUP
-    script:
-      - chmod 755 ./stages/cluster-setup/setup
-      - ./stages/cluster-setup/setup
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-SETUP
+  script:
+    - chmod 755 ./stages/cluster-setup/setup
+    - ./stages/cluster-setup/setup
+
+## Deploy Director On-Prem
+director-deploy:
+  image: harshshekhar15/gitlab-job:v2
+  stage: INFRA-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/infra-setup/dop
+    - ./stages/infra-setup/dop
 
 pre-requisites:
   image: harshshekhar15/gitlab-job:v2
-  stage: PRE-REQUISITES
+  stage: INFRA-SETUP
   dependencies:
     - cluster-create
   script:
     - chmod 755 ./stages/infra-setup/pre-requisites
     - ./stages/infra-setup/pre-requisites
-
-## Deploy Director On-Prem
-director-deploy:
-    image: harshshekhar15/gitlab-job:v2
-    stage: INFRA-SETUP
-    dependencies:
-      - cluster-create
-    script:
-      - chmod 755 ./stages/infra-setup/dop
-      - ./stages/infra-setup/dop
 
 e2e-metrics:
   when: always
@@ -46,11 +45,11 @@ e2e-metrics:
 
 ## Revert the cluster to previous snapshot
 cluster-cleanup:
-    when: always
-    image: harshshekhar15/gitlab-job:v2
-    dependencies:
-      - cluster-create
-    stage: CLUSTER-CLEANUP
-    script:
-      - chmod 755 ./stages/cluster-cleanup/cleanup
-      - ./stages/cluster-cleanup/cleanup
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  dependencies:
+    - cluster-create
+  stage: CLUSTER-CLEANUP
+  script:
+    - chmod 755 ./stages/cluster-cleanup/cleanup
+    - ./stages/cluster-cleanup/cleanup

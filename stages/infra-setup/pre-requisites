@@ -7,6 +7,9 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 
 node() {
 
+bash utils/pooling jobname:dop
+bash utils/e2e-cr jobname:pre-requisites jobphase:Running
+
 # Cloning oep-e2e repository which contains all the test scripts
 git clone https://github.com/mayadata-io/oep-e2e.git
 
@@ -16,6 +19,7 @@ kubectl apply -f oep-e2e/litmus/prerequisite/crds.yaml
 
 echo -e "\n************ Finished Prerequisites ************"
 
+bash utils/e2e-cr jobname:pre-requisites jobphase:Completed
 }
 
 if [ "$1" == "node" ];then

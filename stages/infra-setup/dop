@@ -3,7 +3,7 @@
 pod() {
 
 ## Cloning oep-e2e-rancher repo
-echo -e "Deploying Director On-Prem *************\n"
+echo -e "\n************************ Deploying Director On-Prem ***********************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/dop node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$DOCKER_USERNAME'"' '"'$DOCKER_PASSWORD'"''
 }
 
@@ -13,6 +13,10 @@ GITHUB_USERNAME=$1
 GITHUB_PASSWORD=$2
 DOCKER_USERNAME=$3
 DOCKER_PASSWORD=$4
+
+bash utils/e2e-cr jobname:dop jobphase:Waiting
+bash utils/e2e-cr jobname:dop jobphase:Running
+bash utils/e2e-cr jobname:pre-requisites jobphase:Waiting
 
 #####################################
 ##          Prerequisites          ##
@@ -65,6 +69,8 @@ helm install --name dop .
 # Dump Director On-Prem pods
 echo -e "\n[ Dumping Director On-Prem components ]\n"
 kubectl get pod
+
+bash utils/e2e-cr jobname:dop jobphase:Completed
 }
 
 if [ "$1" == "node" ];then
