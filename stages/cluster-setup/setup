@@ -4,13 +4,13 @@ time="$(TZ=IST date)"
 current_time=$time
 echo $current_time
 
-echo "***Checking if cluster is Engaged or not***"
+echo -e "\n************************ Checking if cluster is Engaged or not ************************\n"
 
 state="sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'ls | grep oep-e2e-rancher'"
 cluster_state=$(eval $state)
 
 while [ "${cluster_state}" == "oep-e2e-rancher" ]; do
-  echo "***Cluster is Engaged***"
+  echo "Cluster Status: Engaged"
   wait=1
   cluster_state=$(eval $state)
   sleep 30
@@ -20,24 +20,33 @@ if [ "$wait" == "1" ]; then
 sleep 120
 fi
 
-echo "*************************Checking the Cluster's Health********************"
+echo -e "Cluster Status: Free"
 
-echo "Checking for the number of nodes in ready state*******************************"
+echo -e "\n************************ Checking the Cluster's Health ********************************\n"
+
+echo -e "[ Checking for the number of nodes in ready state ] -----------------\n"
 ready_nodes=$(sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl get nodes --no-headers | grep -v NotReady | wc -l)
 
 if [ "$ready_nodes" -eq 4 ]; then
-echo "Number of nodes in ready state is $ready_nodes"
-echo "******Cluster is in Healthy state****"
+echo -e "Number of nodes in ready state: $ready_nodes\n"
+echo -e "Cluster State: Healthy\n"
 
-echo "*************Dumping cluster state********"
+echo -e "\n************************ Dumping cluster components state *****************************\n"
+echo -e "[ Print `kubectl get nodes` output ] --------------------------------\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl get nodes
+echo -e "\n[ Print `kubectl get pod --all-namespaces` output ] -----------------\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl get pod --all-namespaces
+echo -e "\n[ Print `kubectl top node` output ] ---------------------------------\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl top node
 
-echo "Cloning oep-e2e-rancher repo*************"
+echo -e "\n************************ Cloning oep-e2e-rancher repo *********************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone https://github.com/mayadata-io/oep-e2e-rancher.git'
 
+echo -e "\n************************ Applying e2e-crd *********************************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl apply -f oep-e2e-rancher/utils/e2e-crd.yml
+
 else
-echo "All nodes are not ready"
-echo "******Cluster is in Unhealthy state*******"
+echo -e "Number of nodes in ready state: $ready_nodes\n"
+echo -e "Cluster State: Healthy\n"
 exit 1;
 fi
