@@ -33,6 +33,15 @@ pre-requisites:
     - chmod 755 ./stages/infra-setup/pre-requisites
     - ./stages/infra-setup/pre-requisites
 
+basic-sanity-checks:
+  image: harshshekhar15/gitlab-job:v2
+  stage: INFRA-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/infra-setup/basic-sanity-checks
+    - ./stages/infra-setup/basic-sanity-checks
+
 e2e-metrics:
   when: always
   image: harshshekhar15/gitlab-job:v2
