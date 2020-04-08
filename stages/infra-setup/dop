@@ -71,7 +71,8 @@ echo -e "\n[ Dumping Director On-Prem components ]\n"
 kubectl get pod
 
 # Exit the directory
-cd ../..
+cd
+cd oep-e2e-rancher
 
 bash utils/e2e-cr jobname:dop jobphase:Completed
 }
