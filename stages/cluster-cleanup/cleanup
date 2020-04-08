@@ -43,13 +43,13 @@ sleep 10
 
 echo -e "\n[ Rebooting the VM's ]-------------------------------------------\n"
 echo "Rebooting VM : $VM1_IP"
-sshpass -p $VM_PASS ssh $VM_USER@$VM1_IP 'reboot'
+sshpass -p $VM_PASS ssh $VM_USER@$VM1_IP 'reboot' > /dev/null 2>&1 &
 echo "Rebooting VM : $VM2_IP"
-sshpass -p $VM_PASS ssh $VM_USER@$VM2_IP 'reboot'
+sshpass -p $VM_PASS ssh $VM_USER@$VM2_IP 'reboot' > /dev/null 2>&1 &
 echo "Rebooting VM : $VM3_IP"
-sshpass -p $VM_PASS ssh $VM_USER@$VM3_IP 'reboot'
+sshpass -p $VM_PASS ssh $VM_USER@$VM3_IP 'reboot' > /dev/null 2>&1 &
 echo "Rebooting VM : $VM4_IP"
-sshpass -p $VM_PASS ssh $VM_USER@$VM4_IP 'reboot'
+sshpass -p $VM_PASS ssh $VM_USER@$VM4_IP 'reboot' > /dev/null 2>&1 &
 
 ## Add sleep so that the cluster becomes available for next pipeline
 sleep 30
