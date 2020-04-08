@@ -15,10 +15,11 @@ bash utils/e2e-cr jobname:pre-requisites jobphase:Running
 # Clone oep-test-suite repo
 echo -e "\n************************ Cloning oep-test-suite repo **********************************\n"
 git clone -b oep https://github.com/harshshekhar15/oep-test-suite.git
+cd oep-test-suite
 
 echo -e "\n************************ Running basic-sanity tests ***********************************\n"
-sh oep-test-suite/oep-test-suite.sh
-
+sh oep-test-suite.sh
+cd ..
 
 bash utils/e2e-cr jobname:pre-requisites jobphase:Completed
 
