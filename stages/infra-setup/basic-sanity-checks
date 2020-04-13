@@ -23,6 +23,11 @@ cd ..
 
 bash utils/e2e-cr jobname:pre-requisites jobphase:Completed
 
+# If any of the above check fails, then fail this job
+if [ $(cat oep-test-suite/result.txt | grep -ic fail) != 0 ];then
+  exit 1
+fi
+
 }
 
 if [ "$1" == "node" ];then

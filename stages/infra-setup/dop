@@ -67,6 +67,9 @@ cd ..
 # Apply helm chart
 helm install --name dop .
 
+# Wait for the components to show up
+sleep 300
+
 # Dump Director On-Prem pods
 echo -e "\n[ Dumping Director On-Prem components ]\n"
 kubectl get pod
