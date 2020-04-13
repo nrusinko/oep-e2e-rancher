@@ -14,8 +14,9 @@ bash utils/e2e-cr jobname:pre-requisites jobphase:Running
 
 # Clone oep-test-suite repo
 echo -e "\n************************ Cloning oep-test-suite repo **********************************\n"
-git clone -b add-scripts https://github.com/mayadata-io/oep-e2e.git
-cd oep-e2e/scripts
+cd oep-e2e/
+git checkout add-scripts
+cd scripts
 
 echo -e "\n************************ Running basic-sanity tests ***********************************\n"
 bash director-health-check.sh
