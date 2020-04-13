@@ -68,6 +68,7 @@ cd ..
 helm install --name dop .
 
 # Wait for the components to show up
+echo -e "\n[ Waiting for the DOP components to show up] ----------------\n"
 sleep 300
 
 # Dump Director On-Prem pods
