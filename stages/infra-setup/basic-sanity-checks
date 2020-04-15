@@ -12,20 +12,13 @@ node() {
 bash utils/pooling jobname:pre-requisites
 bash utils/e2e-cr jobname:pre-requisites jobphase:Running
 
-# Clone oep-test-suite repo
-echo -e "\n************************ Cloning oep-test-suite repo **********************************\n"
-cd oep-e2e/
-git checkout add-scripts
-cd scripts
-
 echo -e "\n************************ Running basic-sanity tests ***********************************\n"
-bash director-health-check.sh
-cd ../..
+bash oep-e2e/scripts/director-health-check.sh
 
 bash utils/e2e-cr jobname:pre-requisites jobphase:Completed
 
 # If any of the above check fails, then fail this job
-if [ $(cat oep-e2e/scripts/result.txt | grep -ic fail) != 0 ];then
+if [ $(cat result.txt | grep -ic fail) != 0 ];then
   exit 1
 fi
 
