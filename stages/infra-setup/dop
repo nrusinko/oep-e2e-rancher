@@ -4,15 +4,15 @@ pod() {
 
 ## Cloning oep-e2e-rancher repo
 echo -e "\n************************ Deploying Director On-Prem ***********************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/dop node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$DOCKER_USERNAME'"' '"'$DOCKER_PASSWORD'"' '"'$RELEASE'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/dop node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"''
 }
 
 node() {
 '"'
 GITHUB_USERNAME=$1
 GITHUB_PASSWORD=$2
-DOCKER_USERNAME=$3
-DOCKER_PASSWORD=$4
+RELEASE_USERNAME=$3
+RELEASE_PASSWORD=$4
 RELEASE=$5
 
 bash utils/e2e-cr jobname:dop jobphase:Waiting
