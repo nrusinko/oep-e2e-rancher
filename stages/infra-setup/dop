@@ -38,7 +38,7 @@ git clone https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/mayadata-io/direc
 cd director-charts-internal
 
 # Get into latest release directory of helm chart
-cd $RELEASE
+cd $RELEASE/director
 
 # Create secret having maya-init repo access
 kubectl create secret docker-registry directoronprem-registry-secret --docker-username=$RELEASE_USERNAME --docker-password=$RELEASE_PASSWORD
