@@ -45,7 +45,7 @@ echo -e "Release Version: $RELEASE\n"
 cd "$RELEASE"/director
 
 # Create secret having maya-init repo access
-kubectl create secret docker-registry directoronprem-registry-secret --docker-username=$RELEASE_USERNAME --docker-password=$RELEASE_PASSWORD
+kubectl create secret docker-registry directoronprem-registry-secret --docker-server=registry.mayadata.io --docker-username=$RELEASE_USERNAME --docker-password=$RELEASE_PASSWORD
 
 # Create clusterrolebinding
 kubectl create clusterrolebinding kube-admin --clusterrole cluster-admin --serviceaccount=kube-system:default
