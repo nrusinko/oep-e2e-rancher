@@ -11,7 +11,7 @@ node() {
 
 bash utils/e2e-cr jobname:create-apikey jobphase:Waiting
 bash utils/e2e-cr jobname:create-apikey jobphase:Running 
-# bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Waiting
+bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Waiting
 # bash utils/e2e-cr jobname:client-components-check jobphase:Waiting
 
 echo -e "\n[ Creating api key for new user account in OEP ]---------------------------------------\n"

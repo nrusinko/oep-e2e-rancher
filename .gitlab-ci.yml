@@ -51,6 +51,15 @@ create-api-key:
     - chmod 755 ./stages/cluster-connect/create-apikey
     - ./stages/cluster-connect/create-apikey
 
+cluster-connect:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/cluster-connect
+    - ./stages/cluster-connect/cluster-connect
+
 e2e-metrics:
   when: always
   image: harshshekhar15/gitlab-job:v2
