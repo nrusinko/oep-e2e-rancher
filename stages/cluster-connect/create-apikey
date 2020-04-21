@@ -17,7 +17,7 @@ bash utils/e2e-cr jobname:create-apikey jobphase:Running
 echo -e "\n[ Creating api key for new user account in OEP ]---------------------------------------\n"
 kubectl create -f oep-e2e/litmus/director/create-apikey/run_litmus_test.yml
 
-test_name=create-apikey
+test_name=create-apikey-check
 echo -e "\nTest Name: $test_name\n"
 
 litmus_pod=$(kubectl get po -n litmus | grep $test_name  | awk {'print $1'} | tail -n 1)
