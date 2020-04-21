@@ -1,0 +1,51 @@
+#!/bin/bash
+
+pod() {
+
+## Creating api key
+echo -e "\n************************ Creating api key *********************************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/cluster-connect/create-apikey node'
+}
+
+node() {
+
+bash utils/e2e-cr jobname:create-apikey jobphase:Waiting
+bash utils/e2e-cr jobname:create-apikey jobphase:Running 
+# bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Waiting
+# bash utils/e2e-cr jobname:client-components-check jobphase:Waiting
+
+echo -e "\n[ Creating api key for new user account in OEP ]---------------------------------------\n"
+kubectl create -f oep-e2e/litmus/director/create-apikey/run_litmus_test.yml
+
+test_name=create-apikey
+echo -e "\nTest Name: $test_name\n"
+
+litmus_pod=$(kubectl get po -n litmus | grep $test_name  | awk {'print $1'} | tail -n 1)
+echo $litmus_pod
+
+job_status=$(kubectl get po  $litmus_pod -n litmus | awk {'print $3'} | tail -n 1)
+while [[ "$job_status" != "Completed" ]]
+do 
+  job_status=$(kubectl get po  $litmus_pod -n litmus | awk {'print $3'} | tail -n 1)
+  sleep 6
+done
+
+kubectl logs -f $litmus_pod -n litmus
+testResult=$(kubectl get litmusresult ${test_name} --no-headers -o custom-columns=:spec.testStatus.result)
+echo -e "\nTest Result: $testResult\n"
+
+if [ "$testResult" != Pass ]
+then
+  bash utils/e2e-cr jobname:create-apikey jobphase:Completed
+  exit 1; 
+else
+  bash utils/e2e-cr jobname:create-apikey jobphase:Completed
+fi
+
+}
+
+if [ "$1" == "node" ];then
+  node
+else
+  pod
+fi
