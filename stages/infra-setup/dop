@@ -59,7 +59,7 @@ helm install --name dop . --set server.url=$DOP_URL --set nginx-ingress.enabled=
 
 # Wait for the components to show up
 echo -e "\n[ Waiting for the DOP components to show up] ----------------\n"
-sleep 300
+sleep 360
 
 # Dump Director On-Prem pods
 echo -e "\n[ Dumping Director On-Prem components ]\n"
