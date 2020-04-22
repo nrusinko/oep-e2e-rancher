@@ -60,6 +60,15 @@ cluster-connect:
     - chmod 755 ./stages/cluster-connect/cluster-connect
     - ./stages/cluster-connect/cluster-connect
 
+client-components-check:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/client-components-check
+    - ./stages/cluster-connect/client-components-check
+
 e2e-metrics:
   when: always
   image: harshshekhar15/gitlab-job:v2
