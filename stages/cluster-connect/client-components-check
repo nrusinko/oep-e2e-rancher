@@ -12,24 +12,8 @@ node() {
 bash utils/pooling jobname:trrc01-cluster-connect
 bash utils/e2e-cr jobname:client-components-check jobphase:Running
 
-URL=http://$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | tail -n 1):30380
-
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
-
-# Apply pre-requisites
-echo -e "\n[ Applying pre-requisites ]-------------------------------------------------\n"
-
-# Setup litmus on cluster2
-echo -e "\n[ Setting up Litmus ]-----------------------------\n"
-kubectl apply -f oep-e2e/litmus/prerequisite/rbac.yaml
-kubectl apply -f oep-e2e/litmus/prerequisite/crds.yaml
-# Create docker secret
-kubectl apply -f oep-e2e/litmus/prerequisite/docker-secret.yml -n litmus
-# Create crb
-kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:default
-# Create configmap for DOP URL
-kubectl create configmap config --from-literal=url=$URL -n litmus
 
 echo -e "\n[ Running client components check ]---------------\n"
 

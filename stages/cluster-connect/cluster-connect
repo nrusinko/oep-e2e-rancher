@@ -12,6 +12,9 @@ node() {
 bash utils/pooling jobname:create-apikey
 bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Running
 
+# Use cluster2 kube config
+export KUBECONFIG=~/.kube/cluster2_config
+
 echo -e "\n[ Connecting the cluster to DOP ]------------------------------------------------------\n"
 kubectl create -f oep-e2e/litmus/director/cluster-connect/run_litmus_test.yml
 
@@ -34,9 +37,11 @@ echo -e "\nTest Result: $testResult\n"
 
 if [ "$testResult" != Pass ]
 then
+  export KUBECONFIG=~/.kube/config
   bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Completed
   exit 1;
 else
+  export KUBECONFIG=~/.kube/config
   bash utils/e2e-cr jobname:trrc01-cluster-connect jobphase:Completed
 fi
 
