@@ -56,7 +56,7 @@ sshpass -p $VM_PASS ssh $VM_USER@$VM4_IP 'reboot' > /dev/null 2>&1 &
 
 # Wait for cluster2 to revert to its latest snapshot
 echo -e "\nWaiting for cluster2 to revert to its latest snapshot\n"
-sleep 50
+sleep 90
 
 ## Removimg oep-e2e-rancher repo
 echo -e "\n[ Removing oep-e2e-rancher repo ]--------------------------------\n"
