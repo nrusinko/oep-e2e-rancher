@@ -54,12 +54,10 @@ sshpass -p $VM_PASS ssh $VM_USER@$VM3_IP 'reboot' > /dev/null 2>&1 &
 echo "Rebooting VM : $VM4_IP"
 sshpass -p $VM_PASS ssh $VM_USER@$VM4_IP 'reboot' > /dev/null 2>&1 &
 
-## Add sleep so that the cluster becomes available for next pipeline
-sleep 50
+echo -e "\n[ Removing litmus repo ]-----------------------------------------\n"
+rm -rf litmus
 
-## Removimg oep-e2e-rancher repo
-echo -e "\n[ Removing oep-e2e-rancher repo ]--------------------------------\n"
-cd  && rm -rf oep-e2e-rancher
+bash utils/e2e-cr jobname:cluster-cleanup jobphase:Completed
 }
 
 if [ "$1" == "node" ];then

@@ -80,3 +80,13 @@ cluster-cleanup:
   script:
     - chmod 755 ./stages/cluster-cleanup/cleanup
     - ./stages/cluster-cleanup/cleanup
+
+cluster2-cleanup:
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  dependencies:
+    - cluster-create
+  stage: CLUSTER-CLEANUP
+  script:
+    - chmod 755 ./stages/cluster-cleanup/cluster2-cleanup
+    - ./stages/cluster-cleanup/cluster2-cleanup
