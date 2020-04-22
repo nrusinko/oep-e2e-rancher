@@ -12,7 +12,6 @@ node() {
 bash utils/e2e-cr jobname:e2e-metrics jobphase:Waiting
 bash utils/e2e-cr jobname:e2e-metrics jobphase:Running 
 bash utils/e2e-cr jobname:cluster-cleanup jobphase:Waiting
-bash utils/e2e-cr jobname:cluster2-cleanup jobphase:Waiting
 
 # Set environment variables
 COVERAGE_NAMESPACE="e2e-metrics"

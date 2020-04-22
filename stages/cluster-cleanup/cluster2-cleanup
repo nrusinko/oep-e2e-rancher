@@ -9,9 +9,6 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 
 node() {
 
-bash utils/pooling jobname:cluster-cleanup
-bash utils/e2e-cr jobname:cluster2-cleanup jobphase:Running
-
 cluster2_master_name=$(echo $1)
 cluster2_worker1_name=$(echo $2)
 cluster2_worker2_name=$(echo $3)
@@ -30,29 +27,29 @@ C2_VM6_IP=${15}
 C2_ESX_IP=${16}
 
 echo -e "\n[ Cloning Litmus repo ]------------------------------------------\n"
-git clone https://github.com/mayadata-io/litmus.git
+git clone https://github.com/openebs/e2e-tests.git
 
 ## Replace the VM names in csv file
 sed -i -e "s/auto1/$cluster2_master_name/g" \
 -e "s/auto2/$cluster2_worker1_name/g" \
 -e "s/auto3/$cluster2_worker2_name/g" \
--e "s/auto4/$cluster2_worker3_name/g" litmus/k8s/on-prem/openshift-installer/vm_name.csv
+-e "s/auto4/$cluster2_worker3_name/g" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
 
 sed -i "/$cluster2_worker3_name/a \
 $cluster2_worker4_name \
-" litmus/k8s/on-prem/openshift-installer/vm_name.csv
+" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
 
 sed -i "/$cluster2_worker4_name/a \
 $cluster2_worker5_name \
-" litmus/k8s/on-prem/openshift-installer/vm_name.csv
+" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
 
 
 ## Replace the snapshot name and ESX ip in vars
 sed -i -e 's/snapshot_name: "oc-cluster"/snapshot_name: "'$C2_SNAPSHOT_NAME'"/g' \
--e 's/esx_ip: "10.12.1.1"/esx_ip: "'$C2_ESX_IP'"/g' litmus/k8s/on-prem/openshift-installer/vars.yml
+-e 's/esx_ip: "10.12.1.1"/esx_ip: "'$C2_ESX_IP'"/g' e2e-tests/k8s/on-prem/openshift-installer/vars.yml
 
 echo -e "\n[ Reverting the cluster ]----------------------------------------\n"
-ansible-playbook litmus/k8s/on-prem/openshift-installer/revert_cluster_state.yml
+ansible-playbook e2e-tests/k8s/on-prem/openshift-installer/revert_cluster_state.yml
 
 ## Add sleep so that the VM's are ready
 sleep 10
@@ -73,10 +70,6 @@ sshpass -p $VM_PASS ssh $VM_USER@$C2_VM6_IP 'reboot' > /dev/null 2>&1 &
 
 ## Add sleep so that the cluster becomes available for next pipeline
 sleep 50
-
-## Removimg oep-e2e-rancher repo
-echo -e "\n[ Removing oep-e2e-rancher repo ]--------------------------------\n"
-cd  && rm -rf oep-e2e-rancher
 }
 
 if [ "$1" == "node" ];then
