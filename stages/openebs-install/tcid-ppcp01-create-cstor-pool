@@ -15,7 +15,7 @@ bash utils/e2e-cr jobname:tcid-ppcp01-create-cstor-pool jobphase:Running
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
 
-kubectl create -f litmus/director/tcid-ppcp01-create-cstor-pool/run_litmus_test.yml
+kubectl create -f oep-e2e/litmus/director/tcid-ppcp01-create-cstor-pool/run_litmus_test.yml
 kubectl get pods -n litmus 
 
 test_name=create-cstor-pool
