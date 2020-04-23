@@ -13,7 +13,7 @@ bash utils/pooling jobname:trrc01-cluster-connect
 bash utils/e2e-cr jobname:client-components-check jobphase:Running
 
 echo -e "\nWaiting for the client components to show up\n"
-sleep 60
+sleep 100
 
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
