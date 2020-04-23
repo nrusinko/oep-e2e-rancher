@@ -4,6 +4,7 @@ stages:
     - CLUSTER-SETUP
     - INFRA-SETUP
     - CLUSTER-CONNECT
+    - OPENEBS-INSTALL
     - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
@@ -68,6 +69,15 @@ client-components-check:
   script:
     - chmod 755 ./stages/cluster-connect/client-components-check
     - ./stages/cluster-connect/client-components-check
+
+openebs-install:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-INSTALL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/openebs-install
+    - ./stages/openebs-install/openebs-install
 
 e2e-metrics:
   when: always
