@@ -16,14 +16,14 @@ cluster-create:
     - ./stages/cluster-setup/setup
 
 ## Deploy Director On-Prem
-tcid-iudi01:
+TCID-DIR-INSTALL:
   image: harshshekhar15/gitlab-job:v2
   stage: INFRA-SETUP
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/infra-setup/tcid-iudi01
-    - ./stages/infra-setup/tcid-iudi01
+    - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL
+    - ./stages/infra-setup/TCID-DIR-INSTALL
 
 # pre-requisites:
 #   image: harshshekhar15/gitlab-job:v2
