@@ -4,7 +4,7 @@ pod() {
 
 ## Cloning oep-e2e-rancher repo
 echo -e "\n************************ Deploying Director On-Prem ***********************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"' '"'$CI_JOB_ID'"' '"'$GITHUB_TOKEN'"' '"'$CI_COMMIT_REF_NAME'"''
 }
 
 node() {
@@ -14,11 +14,17 @@ GITHUB_PASSWORD=$2
 RELEASE_USERNAME=$3
 RELEASE_PASSWORD=$4
 RELEASE=$5
+CI_JOB_ID=$6
+GITHUB_TOKEN=$7
+CI_COMMIT_REF_NAME=$8
 
-# bash utils/e2e-cr jobname:dop jobphase:Waiting
-# bash utils/e2e-cr jobname:dop jobphase:Running
-# bash utils/e2e-cr jobname:pre-requisites jobphase:Waiting
-# bash utils/e2e-cr jobname:basic-sanity-checks jobphase:Waiting
+job_id=$(echo $CI_JOB_ID)
+gittoken=$(echo "$GITHUB_TOKEN")
+current_time=$(date)
+branch_name=$CI_COMMIT_REF_NAME
+test_name="TCID-DIR-INSTALL-ON-LOCAL-HP"
+stage="INFRA-SETUP"
+test_desc="Install DOP using helm with SSD underneath"
 
 #####################################
 ##          Prerequisites          ##
@@ -91,14 +97,23 @@ bash oep-e2e/scripts/director-health-check.sh
 
 # If any of the above check fails, then fail this job
 if [ $(cat result.txt | grep -ic fail) != 0 ];then
+  testResult="Fail"
+  echo -e "\nTest Result: $testResult\n"
+  if [[ $branch_name == "oep-release" ]]; then
+    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$test_name" --platform "rancher"
+  fi
   exit 1
+else
+  testResult="Pass"
+  echo -e "\nTest Result: $testResult\n"
+  if [[ $branch_name == "oep-release" ]]; then
+    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$test_name" --platform "rancher"
+  fi
 fi
-
-# bash utils/e2e-cr jobname:dop jobphase:Completed
 }
 
 if [ "$1" == "node" ];then
-  node $2 $3 $4 $5 $6
+  node $2 $3 $4 $5 $6 $7 $8 $9
 else
   pod
 fi
