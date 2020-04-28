@@ -16,14 +16,14 @@ cluster-create:
     - ./stages/cluster-setup/setup
 
 ## Deploy Director On-Prem
-TCID-DIR-INSTALL:
+TCID-DIR-INSTALL-ON-LOCAL-HP:
   image: harshshekhar15/gitlab-job:v2
   stage: INFRA-SETUP
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL
-    - ./stages/infra-setup/TCID-DIR-INSTALL
+    - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
+    - ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
 
 # pre-requisites:
 #   image: harshshekhar15/gitlab-job:v2

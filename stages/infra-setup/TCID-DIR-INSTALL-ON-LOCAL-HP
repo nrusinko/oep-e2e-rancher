@@ -4,7 +4,7 @@ pod() {
 
 ## Cloning oep-e2e-rancher repo
 echo -e "\n************************ Deploying Director On-Prem ***********************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/TCID-DIR-INSTALL node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP node '"'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"''
 }
 
 node() {
@@ -59,7 +59,7 @@ helm install --name dop . --set server.url=$DOP_URL --set nginx-ingress.enabled=
 
 # Wait for the components to show up
 echo -e "\n[ Waiting for the DOP components to show up] ----------------\n"
-sleep 360
+sleep 600
 
 # Dump Director On-Prem pods
 echo -e "\n[ Dumping Director On-Prem components ]\n"
