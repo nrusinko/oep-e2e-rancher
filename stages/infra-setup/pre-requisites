@@ -10,19 +10,7 @@ node() {
 bash utils/pooling jobname:dop
 bash utils/e2e-cr jobname:pre-requisites jobphase:Running
 
-# Cloning oep-e2e repository which contains all the test scripts
-git clone https://github.com/mayadata-io/oep-e2e.git
 
-# Setup litmus on the cluster
-kubectl apply -f oep-e2e/litmus/prerequisite/rbac.yaml
-kubectl apply -f oep-e2e/litmus/prerequisite/crds.yaml
-kubectl apply -f oep-e2e/litmus/prerequisite/docker-secret.yml
-
-URL=http://$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | tail -n 1)
-echo "URL to access DOP: $URL"
-
-# Create a configmap from URL
-kubectl create configmap config --from-literal=url=$URL -n litmus
 
 echo -e "\n************ Finished Prerequisites ************"
 

@@ -15,10 +15,10 @@ RELEASE_USERNAME=$3
 RELEASE_PASSWORD=$4
 RELEASE=$5
 
-bash utils/e2e-cr jobname:dop jobphase:Waiting
-bash utils/e2e-cr jobname:dop jobphase:Running
-bash utils/e2e-cr jobname:pre-requisites jobphase:Waiting
-bash utils/e2e-cr jobname:basic-sanity-checks jobphase:Waiting
+# bash utils/e2e-cr jobname:dop jobphase:Waiting
+# bash utils/e2e-cr jobname:dop jobphase:Running
+# bash utils/e2e-cr jobname:pre-requisites jobphase:Waiting
+# bash utils/e2e-cr jobname:basic-sanity-checks jobphase:Waiting
 
 #####################################
 ##          Prerequisites          ##
@@ -69,7 +69,32 @@ kubectl get pod
 cd
 cd oep-e2e-rancher
 
-bash utils/e2e-cr jobname:dop jobphase:Completed
+echo -e "\n************************ Installing litmus pre-requisites *****************************\n"
+
+# Cloning oep-e2e repository which contains all the test scripts
+git clone https://github.com/mayadata-io/oep-e2e.git
+
+# Setup litmus on the cluster
+kubectl apply -f oep-e2e/litmus/prerequisite/rbac.yaml
+kubectl apply -f oep-e2e/litmus/prerequisite/crds.yaml
+kubectl apply -f oep-e2e/litmus/prerequisite/docker-secret.yml
+
+URL=http://$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | tail -n 1)
+echo "URL to access DOP: $URL"
+
+# Create a configmap from URL
+kubectl create configmap config --from-literal=url=$URL -n litmus
+
+echo -e "\n************************ Running basic-sanity checks **********************************\n"
+
+bash oep-e2e/scripts/director-health-check.sh
+
+# If any of the above check fails, then fail this job
+if [ $(cat result.txt | grep -ic fail) != 0 ];then
+  exit 1
+fi
+
+# bash utils/e2e-cr jobname:dop jobphase:Completed
 }
 
 if [ "$1" == "node" ];then

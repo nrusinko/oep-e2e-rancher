@@ -1,11 +1,11 @@
 ## Define the stages & order of execution
 
 stages:
-    - CLUSTER-SETUP
-    - INFRA-SETUP
-    - CLUSTER-CONNECT
-    - OPENEBS-INSTALL
-    - CLUSTER-CLEANUP
+  - CLUSTER-SETUP
+  - INFRA-SETUP
+  - CLUSTER-CONNECT
+  - OPENEBS-INSTALL
+  - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
 cluster-create:
@@ -16,32 +16,32 @@ cluster-create:
     - ./stages/cluster-setup/setup
 
 ## Deploy Director On-Prem
-director-deploy:
+tcid-iudi01:
   image: harshshekhar15/gitlab-job:v2
   stage: INFRA-SETUP
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/infra-setup/dop
-    - ./stages/infra-setup/dop
+    - chmod 755 ./stages/infra-setup/tcid-iudi01
+    - ./stages/infra-setup/tcid-iudi01
 
-pre-requisites:
-  image: harshshekhar15/gitlab-job:v2
-  stage: INFRA-SETUP
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/infra-setup/pre-requisites
-    - ./stages/infra-setup/pre-requisites
+# pre-requisites:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: INFRA-SETUP
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/infra-setup/pre-requisites
+#     - ./stages/infra-setup/pre-requisites
 
-basic-sanity-checks:
-  image: harshshekhar15/gitlab-job:v2
-  stage: INFRA-SETUP
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/infra-setup/basic-sanity-checks
-    - ./stages/infra-setup/basic-sanity-checks
+# basic-sanity-checks:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: INFRA-SETUP
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/infra-setup/basic-sanity-checks
+#     - ./stages/infra-setup/basic-sanity-checks
 
 create-api-key:
   image: harshshekhar15/gitlab-job:v2
