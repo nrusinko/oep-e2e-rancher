@@ -1,0 +1,50 @@
+
+pod() {
+
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/cluster-2-health-check node'
+
+}
+
+node() {
+
+export KUBECONFIG=~/.kube/cluster2_config
+
+echo "*************************Checking the Cluster's Health********************"
+
+echo "Checking for the number of nodes in ready state*******************************"
+ready_nodes=$(kubectl get nodes --no-headers | grep -v NotReady | wc -l)
+
+if [ "$ready_nodes" -eq 6 ]; then
+echo "Number of nodes in ready state is $ready_nodes"
+echo "******Cluster is in Healthy state****"
+
+echo "************Cloning openebs/e2e-test Repository****"
+git clone https://github.com/openebs/e2e-tests.git
+kubectl apply -f e2e-tests/hack/crds.yaml 
+kubectl apply -f  e2e-tests/hack/rbac.yaml
+kubectl apply -f utils/e2e-crd.yaml
+
+bash utils/e2e-cr jobname:cluster-2-health-check jobphase:Waiting
+bash utils/e2e-cr jobname:tcid-iuoi02-openebs-install jobphase:Waiting
+bash utils/e2e-cr jobname:TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE jobphase:Waiting
+bash utils/e2e-cr jobname:cluster-2-health-check jobphase:Running
+
+
+echo "*************Dumping cluster state********"
+kubectl get nodes
+kubectl get pod --all-namespaces
+bash utils/e2e-cr jobname:cluster-2-health-check jobphase:Completed
+else
+echo "All nodes are not ready"
+echo "******Cluster is in Unhealthy state*******"
+bash utils/e2e-cr jobname:cluster-2-health-check jobphase:Completed
+exit;
+fi
+
+}
+
+if [ "$1" == "node" ];then
+  node
+else
+  pod
+fi
