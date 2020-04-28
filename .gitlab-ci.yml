@@ -25,24 +25,6 @@ TCID-DIR-INSTALL-ON-LOCAL-HP:
     - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
     - ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
 
-# pre-requisites:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: INFRA-SETUP
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/infra-setup/pre-requisites
-#     - ./stages/infra-setup/pre-requisites
-
-# basic-sanity-checks:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: INFRA-SETUP
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/infra-setup/basic-sanity-checks
-#     - ./stages/infra-setup/basic-sanity-checks
-
 create-api-key:
   image: harshshekhar15/gitlab-job:v2
   stage: CLUSTER-CONNECT
