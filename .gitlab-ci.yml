@@ -61,14 +61,14 @@ tcid-iuoi02-openebs-install:
     - chmod 755 ./stages/openebs-install/tcid-iuoi02-openebs-install
     - ./stages/openebs-install/tcid-iuoi02-openebs-install
 
-tcid-ppcp01-create-cstor-pool:
+TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-INSTALL
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/openebs-install/tcid-ppcp01-create-cstor-pool
-    - ./stages/openebs-install/tcid-ppcp01-create-cstor-pool
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+    - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 
 e2e-metrics:
   when: always
