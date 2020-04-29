@@ -22,7 +22,7 @@ echo "************Cloning openebs/e2e-test Repository****"
 git clone https://github.com/openebs/e2e-tests.git
 kubectl apply -f e2e-tests/hack/crds.yaml 
 kubectl apply -f  e2e-tests/hack/rbac.yaml
-kubectl apply -f utils/e2e-crd.yaml
+kubectl apply -f utils/e2e-crd.yml
 
 bash utils/e2e-cr jobname:cluster-2-health-check jobphase:Waiting
 bash utils/e2e-cr jobname:tcid-iuoi02-openebs-install jobphase:Waiting
