@@ -9,7 +9,6 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 
 node() {
 
-# Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
 
 bash utils/pooling jobname:cluster-2-health-check
