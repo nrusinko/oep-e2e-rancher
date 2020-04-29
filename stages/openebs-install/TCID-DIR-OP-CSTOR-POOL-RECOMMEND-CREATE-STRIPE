@@ -4,7 +4,7 @@ pod() {
 
 ## Creating Cstor pool using DOP on cluster2
 echo -e "\n************************ Creating Cstor pool ******************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/tcid-ppcp01-create-cstor-pool node'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node'
 }
 
 node() {

@@ -11,7 +11,7 @@ node() {
 
 bash utils/e2e-cr jobname:tcid-iuoi02-openebs-install jobphase:Waiting
 bash utils/e2e-cr jobname:tcid-iuoi02-openebs-install jobphase:Running 
-bash utils/e2e-cr jobname:tcid-ppcp01-create-cstor-pool jobphase:Waiting
+bash utils/e2e-cr jobname:TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:Waiting
 
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
