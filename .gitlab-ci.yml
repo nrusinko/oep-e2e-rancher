@@ -61,6 +61,15 @@ tcid-iuoi02-openebs-install:
     - chmod 755 ./stages/openebs-install/tcid-iuoi02-openebs-install
     - ./stages/openebs-install/tcid-iuoi02-openebs-install
 
+cluster-2-health-check:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-INSTALL
+  dependencies:
+    - cluster-health-check
+  script:
+    - chmod 755 ./stages/openebs-install/cluster-2-health-check
+    - ./stages/openebs-install/cluster-2-health-check
+
 TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-INSTALL
