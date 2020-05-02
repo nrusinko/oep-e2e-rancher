@@ -1,0 +1,48 @@
+#!/bin/bash
+
+pod() {
+
+## Deploying selenium--grid
+echo -e "\n************************ Deploying selenium-grid **************************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/selenium-grid-deploy node '"'$AWS_CREDS'"' '"'$CI_PIPELINE_ID'"''
+}
+
+node() {
+
+bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Waiting
+bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Running 
+bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Waiting
+
+AWS_CREDS="$1"
+PIPELINE_ID=$2
+
+path=$(pwd)
+
+echo -e "\n[ AWS config ] -----------------------------------------------------\n"
+mkdir -p ~/.aws
+cp $AWS_CREDS ~/.aws/credentials
+sed 's|region = eu-central-1|region = eu-north-1|' -i ~/.aws/config
+ls ~/.aws/
+
+echo -e "\n[ Cloning gui-automation repo ] ------------------------------------\n"
+git clone https://github.com/mayadata-io/gui-automation.git
+cd gui-automation
+tests_count=`find . -type f -name '*_test.py' -exec grep -e 'def test_' '{}' \; | wc -l`
+echo "Number of GUI test scripts: $tests_count"
+cd ..
+
+cd stages/director-gui/templates
+ls
+cluster1=$(echo "pipeline-$PIPELINE_ID")
+
+aws cloudformation create-stack --stack-name selenium-grid-${cluster1} --template-body file://hub.yml --parameters ParameterKey=NumberOfChromeNodes,ParameterValue=$tests_count ParameterKey=ClusterName,ParameterValue=${cluster1} ParameterKey=LogName,ParameterValue=${cluster1}
+
+cd ../../..
+bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Completed
+}
+
+if [ "$1" == "node" ];then
+  node $2 $3
+else
+  pod
+fi
