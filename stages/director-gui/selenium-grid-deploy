@@ -20,7 +20,7 @@ path=$(pwd)
 
 echo -e "\n[ AWS config ] -----------------------------------------------------\n"
 mkdir -p ~/.aws
-cp $AWS_CREDS ~/.aws/credentials
+cp "$AWS_CREDS" ~/.aws/credentials
 sed 's|region = eu-central-1|region = eu-north-1|' -i ~/.aws/config
 ls ~/.aws/
 

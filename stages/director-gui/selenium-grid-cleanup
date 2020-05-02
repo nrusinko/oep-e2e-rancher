@@ -21,6 +21,7 @@ PIPELINE_ID=$1
     echo 'Selenium CloudFormation stack was absent'
 }
 
+rm -rf ~/.aws
 bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Completed
 }
 
