@@ -46,7 +46,7 @@ EOF
 test_name=$(bash utils/generate_test_name testcase=busybox-provision-jiva-replica-scaleup metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 echo "Running the litmus test for Busybox Deployment.."
 cp apps/busybox/deployers/run_litmus_test.yml deploy_busybox_jiva_replica_scale.yml
 
@@ -79,7 +79,7 @@ fi
 run_id="jiva-rep-scaleup";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_jiva_rep_scaleup.yml
 
@@ -127,7 +127,7 @@ fi
 test_name=$(bash utils/generate_test_name testcase=scaleup-jiva-replica metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp experiments/functional/scale_jiva_replica/run_litmus_test.yml busybox_scale_jiva_rep.yml
 
@@ -166,7 +166,7 @@ fi
 run_id="deprovision-jiva-rep-scaleup";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_deprovision_jiva_rep_scaleup.yml
 
@@ -217,7 +217,7 @@ fi
 test_name=$(bash utils/generate_test_name testcase=busybox-deprovision-jiva-replica-scaleup metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 cp apps/busybox/deployers/run_litmus_test.yml deprovision_busybox_jiva_replica.yml
 
 sed -i -e 's/generateName: litmus-busybox-deploy/generateName: busybox-deprovision-replica-scaleup/g' \

@@ -30,7 +30,7 @@ bash utils/e2e-cr-new jobname:app-target-affinity-jiva jobphase:Running
 test_name=$(bash utils/generate_test_name testcase=busybox-provision-target-affinity-jiva metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 echo "Running the litmus test for Busybox Deployment.."
 cp apps/busybox/deployers/run_litmus_test.yml deploy_affinity_test_jiva.yml
 
@@ -77,7 +77,7 @@ fi
 run_id="jiva-affinity";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_target_affinity.yml
 
@@ -124,7 +124,7 @@ fi
 run_id="jiva";test_name=$(bash utils/generate_test_name testcase=app-target-affinity metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 cp experiments/functional/app-target-affinity/run_litmus_test.yml run_affinity_test_jiva.yml
 
 : << EOF
@@ -168,7 +168,7 @@ fi
 run_id="dep-jiva-affinity";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml bb_loadgen_dep_target_affinity.yml
 
@@ -221,7 +221,7 @@ echo $test_name
 # LitmusBook 5 #
 ################
 
-cd litmus
+cd e2e-tests
 cp apps/busybox/deployers/run_litmus_test.yml deprovision_affinity_jiva.yml
 
 : << EOF
