@@ -7,6 +7,7 @@ stages:
   - OPENEBS-INSTALL
   - FUNCTIONAL
   - CHAOS
+  - DIRECTOR-GUI
   - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
@@ -80,6 +81,27 @@ TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
   script:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
     - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+
+## Selenium Grid Spin up
+selenium-grid-deploy:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/selenium-grid-deploy
+    - ./stages/director-gui/selenium-grid-deploy
+
+## Selenium Grid Clean up
+selenium-grid-cleanup:
+  when: always
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/selenium-grid-cleanup
+    - ./stages/director-gui/selenium-grid-cleanup
 
 e2e-metrics:
   when: always

@@ -8,7 +8,7 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 }
 
 node() {
-'"'
+
 GITHUB_USERNAME=$1
 GITHUB_PASSWORD=$2
 RELEASE_USERNAME=$3
