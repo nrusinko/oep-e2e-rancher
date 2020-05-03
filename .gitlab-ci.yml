@@ -5,6 +5,8 @@ stages:
   - INFRA-SETUP
   - CLUSTER-CONNECT
   - OPENEBS-INSTALL
+  - FUNCTIONAL
+  - CHAOS
   - DIRECTOR-GUI
   - CLUSTER-CLEANUP
 
@@ -110,6 +112,108 @@ e2e-metrics:
   script:
     - chmod 755 ./stages/cluster-cleanup/e2e-metrics
     - ./stages/cluster-cleanup/e2e-metrics
+
+## Functional Tests
+Jiva-App-Target-Affinity:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/Jiva-App-Target-Affinity/app-target-affinity
+    - ./stages/functional/Jiva-App-Target-Affinity/app-target-affinity
+
+Jiva-Snapshot:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/Jiva-snapshot/jiva-snapshot
+    - ./stages/functional/Jiva-snapshot/jiva-snapshot
+
+Jiva-Snapshot-Clone:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
+    - ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
+
+Jiva-Snapshot-Delete:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/Jiva-Snapshot-Delete/jiva-snapshot-delete
+    - ./stages/functional/Jiva-Snapshot-Delete/jiva-snapshot-delete
+
+Jiva-Volume-Scaleup:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
+    - ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
+
+# CHAOS Tests JOB
+
+Jiva-App-Kill:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-App-kill/jiva-app-kill
+    - ./stages/chaos/Jiva-App-kill/jiva-app-kill
+
+Jiva-Revision-Counter:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
+    - ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
+
+Jiva-Revision-Counter:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-Replica-Network-Delay/jiva-replica-network-delay
+    - ./stages/chaos/Jiva-Replica-Network-Delay/jiva-replica-network-delay
+
+Jiva-Controller-Kill:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-Controller-kill/jiva-controller-kill
+    - ./stages/chaos/Jiva-Controller-kill/jiva-controller-kill
+
+Jiva-Controller-Network-Delay:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-Controller-Network-Delay/ctrl-network-delay
+    - ./stages/chaos/Jiva-Controller-Network-Delay/ctrl-network-delay
+
+Jiva-Replica-Node-Affinity:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
+    - ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
 
 ## Revert the cluster to previous snapshot
 cluster-cleanup:
