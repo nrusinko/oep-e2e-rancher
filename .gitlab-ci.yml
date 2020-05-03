@@ -168,6 +168,42 @@ Jiva-Volume-Scaleup:
     - chmod 755 ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
     - ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
 
+cStor-csi-volume-snapshot:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/cstor-csi-volume-snapshot/csi-cstor-snapshot
+    - ./stages/functional/cstor-csi-volume-snapshot/csi-cstor-snapshot
+
+cStor-csi-volume-clone:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/cstor-csi-volume-clone/csi-cstor-clone
+    - ./stages/functional/cstor-csi-volume-clone/csi-cstor-clone
+
+cStor-ext4-volume-resize:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/cstor-ext4-volume-resize/csi-volume-resize
+    - ./stages/functional/cstor-ext4-volume-resize/csi-volume-resize
+
+cStor-xfs-volume-resize:
+  image: harshshekhar15/gitlab-job:v2
+  stage: FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
+    - ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
+
 # CHAOS Tests JOB
 
 Jiva-App-Kill:
