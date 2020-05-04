@@ -2,7 +2,7 @@
 
 pod() {
 
-## Cleaning up selenium--grid
+## Cleaning up selenium-grid
 echo -e "\n************************ Cleaning up selenium-grid ************************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/selenium-grid-cleanup node '"'$CI_PIPELINE_ID'"''
 }

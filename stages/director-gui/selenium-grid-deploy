@@ -10,7 +10,8 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-
 node() {
 
 bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Waiting
-bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Running 
+bash utils/e2e-cr jobname:selenium-grid-deploy jobphase:Running
+bash utils/e2e-cr jobname:gui-auth jobphase:Waiting
 bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Waiting
 
 PIPELINE_ID=$1
