@@ -107,8 +107,17 @@ tcid-gaau01-gui-auth:
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/gui-auth
-    - ./stages/director-gui/gui-auth
+    - chmod 755 ./stages/director-gui/tcid-gaau01-gui-auth
+    - ./stages/director-gui/tcid-gaau01-gui-auth
+
+tcid-gacc01-gui-cluster:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gacc01-gui-cluster
+    - ./stages/director-gui/tcid-gacc01-gui-cluster
 
 ## Selenium Grid Clean up
 selenium-grid-cleanup:
