@@ -82,14 +82,14 @@ TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
     - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 
-DEPLOY-CSI-PROVISIONER:
+OPENEBS-STORAGE-POLICIES:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-INSTALL
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/openebs-install/deploy-csi-provisioner
-    - ./stages/openebs-install/deploy-csi-provisioner
+    - chmod 755 ./stages/openebs-install/openebs-storage-policies
+    - ./stages/openebs-install/openebs-storage-policies
 
 ## Selenium Grid Spin up
 selenium-grid-deploy:
