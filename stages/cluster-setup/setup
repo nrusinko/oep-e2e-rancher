@@ -40,7 +40,7 @@ echo -e "\n[ Print 'kubectl top node' output ] ---------------------------------
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl top node
 
 echo -e "\n************************ Cloning oep-e2e-rancher repo *********************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone -b oep-release https://github.com/mayadata-io/oep-e2e-rancher.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone -b gui-test https://github.com/mayadata-io/oep-e2e-rancher.git'
 
 echo -e "\n************************ Applying e2e-crd *********************************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl apply -f oep-e2e-rancher/utils/e2e-crd.yml
