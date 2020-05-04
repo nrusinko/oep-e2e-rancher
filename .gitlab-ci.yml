@@ -64,23 +64,23 @@ TCID-DIR-OP-INSTALL-OPENEBS:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
     - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
 
-cluster-2-health-check:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-INSTALL
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/openebs-install/cluster-2-health-check
-    - ./stages/openebs-install/cluster-2-health-check
+# cluster-2-health-check:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: OPENEBS-INSTALL
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/openebs-install/cluster-2-health-check
+#     - ./stages/openebs-install/cluster-2-health-check
 
-TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-INSTALL
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
-    - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+# TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: OPENEBS-INSTALL
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+#     - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 
 OPENEBS-STORAGE-POLICIES:
   image: harshshekhar15/gitlab-job:v2
@@ -100,6 +100,15 @@ selenium-grid-deploy:
   script:
     - chmod 755 ./stages/director-gui/selenium-grid-deploy
     - ./stages/director-gui/selenium-grid-deploy
+
+tcid-gaau01-gui-auth:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/gui-auth
+    - ./stages/director-gui/gui-auth
 
 ## Selenium Grid Clean up
 selenium-grid-cleanup:
