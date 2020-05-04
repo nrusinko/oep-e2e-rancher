@@ -4,13 +4,13 @@ pod() {
 
 ## Running gui-auth test
 echo -e "\n************************ Running GUI auth test ****************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/gui-auth node'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/tcid-gaau01-gui-auth node'
 }
 
 node() {
 
 bash utils/pooling jobname:selenium-grid-deploy
-bash utils/e2e-cr jobname:gui-auth jobphase:Running
+bash utils/e2e-cr jobname:tcid-gaau01-gui-auth jobphase:Running
 
 URL=$(kubectl get cm -n litmus config -o=jsonpath="{.items}{.data.url}")
 echo -e "\nDOP URL: $URL\n"
@@ -27,7 +27,7 @@ python3 -m pytest -m gaau01 --url $URL --environment remote -v --tests-per-worke
 
 cd ..
 
-bash utils/e2e-cr jobname:gui-auth jobphase:Completed
+bash utils/e2e-cr jobname:tcid-gaau01-gui-auth jobphase:Completed
 }
 
 if [ "$1" == "node" ];then
