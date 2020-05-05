@@ -20,10 +20,10 @@ cd gui-automation
 ##   Running test  ##
 ######################
 
-python3 -m pip install -r requirements.txt
+python3.7 -m pip install -r requirements.txt
 
 #Running tests with gaau01 marker
-python3 -m pytest -m gacc01 --url $URL --environment remote -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
+python3.7 -m pytest -m gacc01 --url $URL --environment remote -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
 
 cd ..
 
