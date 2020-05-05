@@ -44,7 +44,7 @@ bash utils/e2e-cr-new jobname:jiva-snapshot-clone jobphase:Waiting
   ---------------------------------------------------------------------------------------------------------------------
 EOF
 
-test_name=$(bash generate_test_name testcase=busybox-provision-busybox-jiva-snap metadata="")
+test_name=$(bash utils/generate_test_name testcase=busybox-provision-busybox-jiva-snap metadata="")
 echo $test_name
 
 cd e2e-tests
