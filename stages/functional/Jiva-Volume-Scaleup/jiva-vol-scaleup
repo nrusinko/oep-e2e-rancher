@@ -2,7 +2,7 @@
 
 
 pod() {
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/functional/4E0O-Jiva-Volume-scaleup/jiva-volume-scaleup node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$RELEASE_TAG'"' '"'$RELEASE_TAG'"'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/functional/Jiva-Volume-scaleup/jiva-volume-scaleup node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$RELEASE_TAG'"' '"'$RELEASE_TAG'"'
 }
 
 node() {

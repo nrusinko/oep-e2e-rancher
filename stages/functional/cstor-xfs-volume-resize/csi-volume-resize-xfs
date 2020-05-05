@@ -1,11 +1,13 @@
 #!/bin/bash
 
 pod(){
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/functional/csi-xfs-volume-resize/csi-volume-resize-xfs node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$CI_COMMIT_SHA'"' '"'$RELEASE_TAG'"'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$CI_COMMIT_SHA'"' '"'$RELEASE_TAG'"'
 }
 
 node() {
-source ~/.profile
+
+export KUBECONFIG=~/.kube/cluster2_config
+
 job_id=$(echo $1)
 pipeline_id=$(echo $2)
 commit_id=$(echo $3)
