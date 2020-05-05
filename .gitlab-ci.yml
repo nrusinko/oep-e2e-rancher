@@ -5,8 +5,8 @@ stages:
   - INFRA-SETUP
   - CLUSTER-CONNECT
   - OPENEBS-INSTALL
-  - FUNCTIONAL
-  - CHAOS
+  - OPENEBS-FUNCTIONAL
+  - OPENEBS-CHAOS
   - DIRECTOR-GUI
   - CLUSTER-CLEANUP
 
@@ -82,14 +82,14 @@ TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
     - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 
-DEPLOY-CSI-PROVISIONER:
+OPENEBS-STORAGE-POLICIES:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-INSTALL
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/openebs-install/deploy-csi-provisioner
-    - ./stages/openebs-install/deploy-csi-provisioner
+    - chmod 755 ./stages/openebs-install/openebs-storage-policies
+    - ./stages/openebs-install/openebs-storage-policies
 
 ## Selenium Grid Spin up
 selenium-grid-deploy:
@@ -125,7 +125,7 @@ e2e-metrics:
 ## Functional Tests
 Jiva-App-Target-Affinity:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -134,7 +134,7 @@ Jiva-App-Target-Affinity:
 
 Jiva-Snapshot:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -143,7 +143,7 @@ Jiva-Snapshot:
 
 Jiva-Snapshot-Clone:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -152,7 +152,7 @@ Jiva-Snapshot-Clone:
 
 Jiva-Snapshot-Delete:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -161,7 +161,7 @@ Jiva-Snapshot-Delete:
 
 Jiva-Volume-Scaleup:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -170,7 +170,7 @@ Jiva-Volume-Scaleup:
 
 cStor-csi-volume-snapshot:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -179,7 +179,7 @@ cStor-csi-volume-snapshot:
 
 cStor-csi-volume-clone:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -188,7 +188,7 @@ cStor-csi-volume-clone:
 
 cStor-ext4-volume-resize:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -197,7 +197,7 @@ cStor-ext4-volume-resize:
 
 cStor-xfs-volume-resize:
   image: harshshekhar15/gitlab-job:v2
-  stage: FUNCTIONAL
+  stage: OPENEBS-FUNCTIONAL
   dependencies:
     - cluster-create
   script:
@@ -208,7 +208,7 @@ cStor-xfs-volume-resize:
 
 Jiva-App-Kill:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:
@@ -217,7 +217,7 @@ Jiva-App-Kill:
 
 Jiva-Revision-Counter:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:
@@ -226,7 +226,7 @@ Jiva-Revision-Counter:
 
 Jiva-Revision-Counter:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:
@@ -235,7 +235,7 @@ Jiva-Revision-Counter:
 
 Jiva-Controller-Kill:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:
@@ -244,7 +244,7 @@ Jiva-Controller-Kill:
 
 Jiva-Controller-Network-Delay:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:
@@ -253,7 +253,7 @@ Jiva-Controller-Network-Delay:
 
 Jiva-Replica-Node-Affinity:
   image: harshshekhar15/gitlab-job:v2
-  stage: CHAOS
+  stage: OPENEBS-CHAOS
   dependencies:
     - cluster-create
   script:

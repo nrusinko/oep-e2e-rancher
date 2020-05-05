@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pod() {
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/deploy-csi-provisioner node '
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/openebs-storage-policies node '
 }
 
 node() {
@@ -10,9 +10,9 @@ export KUBECONFIG=~/.kube/cluster2_config
 
 #pooling over previous job to complete
 bash utils/pooling jobname:tcid-dir-op-cstor-pool-recommend-create-stripe
-bash utils/e2e-cr jobname:csi-operator-provision jobphase:Running
+bash utils/e2e-cr jobname:openebs-storage-policies jobphase:Running
 
-test_name=$(bash utils/generate_test_name testcase=csi-provision metadata="")
+test_name=$(bash utils/generate_test_name testcase=cstor-storage-policies metadata="")
 echo $test_name
 
 cd e2e-tests
@@ -21,28 +21,27 @@ cd e2e-tests
   ---------------------------------------------------------------------------------------------------------------------
  | specAttribute     | kind   |         default value               | test specifc value                               |
   ---------------------------------------------------------------------------------------------------------------------|
- | imagePullPolicy   | image  |  Always                             | IfNotPresent                                     |
- | Storage class name| env    | openebs-csi-cstor-sparse            | openebs-cstor-csi                                | 
+ | pool type         | env    | spc                                 | cspc                                             | 
  | cspc pool name    | env    | rec-create-test                     | rec-create-test                                  | 
   ----------------------------------------------------------------------------------------------------------------------
 EOF
 
 echo "Running the litmus test.."
-sed -i -e 's/imagePullPolicy: Always/imagePullPolicy: IfNotPresent/g' \
--e 's/value: openebs-csi-cstor-sparse/value: openebs-cstor-csi/g' \
--e 's/cstor-sparse-pool/rec-create-test/g' providers/csi-provisioner/run_litmus_test.yml
 
-run_test=providers/csi-provisioner/run_litmus_test.yml
+sed -i -e 's/value: spc/value: cspc/g' \
+-e 's/cstor-sparse-pool/rec-create-test/g' providers/cstor-storage-policies/run_litmus_test.yml
+
+run_test=providers/cstor-storage-policies/run_litmus_test.yml
 
 cat $run_test
 
-bash ../utils/litmus_job_runner label='app:csi-provisioner' job=$run_test
+bash ../utils/litmus_job_runner label='app:cstor-storage-policy' job=$run_test
 
 echo "Dumping state of cluster post job run"; echo ""
 bash ../utils/dump_cluster_state;
 
 cd ..
-bash utils/event_updater jobname:csi-operator-provision $test_name
+bash utils/event_updater jobname:openebs-storage-policies $test_name
 
 #################
 ## GET RESULT  ##
@@ -53,7 +52,7 @@ rc_val=$(echo $?)
 source ~/.profile
 testResult=$(kubectl get litmusresult ${test_name} --no-headers -o custom-columns=:spec.testStatus.result)
 
-bash utils/e2e-cr jobname:csi-operator-provision jobphase:Completed
+bash utils/e2e-cr jobname:openebs-storage-policies jobphase:Completed
 
 if [ "$rc_val" != "0" ]; then
 exit 1;
