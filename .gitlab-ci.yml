@@ -119,6 +119,60 @@ tcid-gacc01-gui-cluster:
     - chmod 755 ./stages/director-gui/tcid-gacc01-gui-cluster
     - ./stages/director-gui/tcid-gacc01-gui-cluster
 
+tcid-gada01-gui-dashboard-home:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gada01-gui-dashboard-home
+    - ./stages/director-gui/tcid-gada01-gui-dashboard-home
+
+tcid-gato01-gui-dashboard-topology:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gato01-gui-dashboard-topology
+    - ./stages/director-gui/tcid-gato01-gui-dashboard-topology
+
+gui-dashboard:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/gui-dashboard
+    - ./stages/director-gui/gui-dashboard
+
+tcid-gaal01-gui-dashboard-alerts:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gaal01-gui-dashboard-alerts
+    - ./stages/director-gui/tcid-gaal01-gui-dashboard-alerts
+
+tcid-galo01-gui-dashboard-logs:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-galo01-gui-dashboard-logs
+    - ./stages/director-gui/tcid-galo01-gui-dashboard-logs
+
+tcid-gada02-gui-dashboard-overview:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gada02-gui-dashboard-overview
+    - ./stages/director-gui/tcid-gada02-gui-dashboard-overview
+
 ## Selenium Grid Clean up
 selenium-grid-cleanup:
   when: always
