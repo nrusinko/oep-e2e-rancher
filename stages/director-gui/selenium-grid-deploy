@@ -19,7 +19,6 @@ bash utils/e2e-cr jobname:gui-dashboard jobphase:Waiting
 bash utils/e2e-cr jobname:tcid-gaal01-gui-dashboard-alerts jobphase:Waiting
 bash utils/e2e-cr jobname:tcid-galo01-gui-dashboard-logs jobphase:Waiting
 bash utils/e2e-cr jobname:tcid-gada02-gui-dashboard-overview jobphase:Waiting
-bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Waiting
 
 PIPELINE_ID=$1
 
