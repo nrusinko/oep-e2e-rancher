@@ -177,12 +177,12 @@ tcid-gada02-gui-dashboard-overview:
 selenium-grid-cleanup:
   when: always
   image: harshshekhar15/gitlab-job:v5
-  stage: DIRECTOR-GUI
+  stage: CLUSTER-CLEANUP
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/selenium-grid-cleanup
-    - ./stages/director-gui/selenium-grid-cleanup
+    - chmod 755 ./stages/cluster-cleanup/selenium-grid-cleanup
+    - ./stages/cluster-cleanup/selenium-grid-cleanup
 
 e2e-metrics:
   when: always

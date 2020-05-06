@@ -4,13 +4,10 @@ pod() {
 
 ## Cleaning up selenium-grid
 echo -e "\n************************ Cleaning up selenium-grid ************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/selenium-grid-cleanup node '"'$CI_PIPELINE_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/cluster-cleanup/selenium-grid-cleanup node '"'$CI_PIPELINE_ID'"''
 }
 
 node() {
-
-bash utils/pooling jobname:selenium-grid-deploy
-bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Running
 
 PIPELINE_ID=$1
 
@@ -21,7 +18,6 @@ PIPELINE_ID=$1
     echo 'Selenium CloudFormation stack was absent'
 }
 
-bash utils/e2e-cr jobname:selenium-grid-cleanup jobphase:Completed
 }
 
 if [ "$1" == "node" ];then
