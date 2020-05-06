@@ -40,7 +40,7 @@ echo -e "\n[ Print 'kubectl top node' output ] ---------------------------------
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl top node
 echo -e "\n[ Print 'k8s version' ] ---------------------------------------------\n"
 version=$(sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port kubectl get nodes -o=jsonpath='{.items[0].status.nodeInfo.kubeletVersion}')
-echo -e "k8s-version: $version"
+echo -e "KubernetesVersion: $version"
 
 echo -e "\n************************ Cloning oep-e2e-rancher repo *********************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone -b oep-release https://github.com/mayadata-io/oep-e2e-rancher.git'
