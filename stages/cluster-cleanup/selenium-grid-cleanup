@@ -4,16 +4,17 @@ pod() {
 
 ## Cleaning up selenium-grid
 echo -e "\n************************ Cleaning up selenium-grid ************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/cluster-cleanup/selenium-grid-cleanup node '"'$CI_PIPELINE_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/cluster-cleanup/selenium-grid-cleanup node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"''
 }
 
 node() {
 
-PIPELINE_ID=$1
+CI_PROJECT_NAME=$(echo $1)
+CI_PIPELINE_ID=$(echo $2)
+GUID=grid-${CI_PROJECT_NAME}-${CI_PIPELINE_ID}
 
 {
-    cluster1=$(echo "pipeline-$PIPELINE_ID")
-    aws cloudformation delete-stack --stack-name selenium-grid-${cluster1}
+    aws cloudformation delete-stack --stack-name ${GUID}
 } || {
     echo 'Selenium CloudFormation stack was absent'
 }
@@ -21,7 +22,7 @@ PIPELINE_ID=$1
 }
 
 if [ "$1" == "node" ];then
-  node $2
+  node $2 $3
 else
   pod
 fi
