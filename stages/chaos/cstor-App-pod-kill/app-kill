@@ -31,7 +31,7 @@ bash utils/e2e-cr-new jobname:app-kill jobphase:Running init_time:"$current_time
 test_name=$(bash utils/generate_test_name testcase=busybox-provision-app-kill metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 echo "Running the litmus test for Busybox Deployment.."
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/deployers/run_litmus_test.yml busybox_app_kill.yml
@@ -79,7 +79,7 @@ fi
 run_id="app-kill";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_app_kill.yml
 
@@ -127,7 +127,7 @@ fi
 test_name=$(bash utils/generate_test_name testcase=application-pod-failure metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp experiments/chaos/app_pod_failure/run_litmus_test.yml appkill.yml
 
@@ -167,7 +167,7 @@ fi
 run_id="deprovision-app-kill";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_deprovision_app_kill.yml
 
@@ -216,7 +216,7 @@ fi
 test_name=$(bash utils/generate_test_name testcase=busybox-deprovision-app-kill metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/deployers/run_litmus_test.yml deprovision_app_kill.yml
 

@@ -32,7 +32,7 @@ echo "*******Deploying Busybox Application****"
 test_name=$(bash utils/generate_test_name testcase=busybox-provision-target-kill metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 echo "Running the litmus test for Busybox Deployment.."
 
 cp apps/busybox/deployers/run_litmus_test.yml busybox_target_kill.yml
@@ -61,7 +61,7 @@ fi
 run_id="target-kill";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_target_kill.yml
 
@@ -109,7 +109,7 @@ fi
 run_id="delete";test_name=$(bash utils/generate_test_name testcase=openebs-target-failure metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 cp experiments/chaos/openebs_target_failure/run_litmus_test.yml run_target_kill_test.yml
 
 sed -i -e 's/value: percona-mysql-claim/value: openebs-bb-targetkill/g' \
@@ -151,7 +151,7 @@ fi
 run_id="deprovision-target-kill";test_name=$(bash utils/generate_test_name testcase=busybox-liveness metadata=${run_id})
 echo $test_name
 
-cd litmus
+cd e2e-tests
 # copy the content of deployer run_litmus_test.yml into a different file to update the test specific parameters.
 cp apps/busybox/liveness/run_litmus_test.yml busybox_loadgen_deprovision_target_kill.yml
 
@@ -202,7 +202,7 @@ echo "********Deprovisioning Busybox Application*******"
 test_name=$(bash utils/generate_test_name testcase=busybox-deprovision-target-kill metadata="")
 echo $test_name
 
-cd litmus
+cd e2e-tests
 cp apps/busybox/deployers/run_litmus_test.yml deprovision_target_kill.yml
 
 sed -i -e 's/generateName: litmus-busybox-deploy/generateName: busybox-deprovision-target-kill/g' \
