@@ -2,7 +2,7 @@
 
 
 pod() {
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/functional/Jiva-App-kill/jiva-app-kill node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$RELEASE_TAG'"'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/chaos/Jiva-App-kill/jiva-app-kill node '"'$CI_JOB_ID'"'' '"'$CI_PIPELINE_ID'"' '"'$RELEASE_TAG'"'
 }
 
 node() {
@@ -11,7 +11,7 @@ export KUBECONFIG=~/.kube/cluster2_config
 
 job_id=$(echo $1)
 pipeline_id=$(echo $2)
-releaseTag=$(echo $3)
+releaseTag=$(echo $3)m
 
 case_id=AUZF
 
