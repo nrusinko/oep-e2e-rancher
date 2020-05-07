@@ -150,15 +150,6 @@ Jiva-Snapshot-Clone:
     - chmod 755 ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
     - ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
 
-Jiva-Snapshot-Delete:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/functional/Jiva-Snapshot-Delete/jiva-snapshot-delete
-    - ./stages/functional/Jiva-Snapshot-Delete/jiva-snapshot-delete
-
 Jiva-Volume-Scaleup:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-FUNCTIONAL
@@ -207,6 +198,7 @@ cStor-xfs-volume-resize:
 # CHAOS Tests JOB
 
 Jiva-App-Kill:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -216,6 +208,7 @@ Jiva-App-Kill:
     - ./stages/chaos/Jiva-App-kill/jiva-app-kill
 
 Jiva-Revision-Counter:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -224,7 +217,8 @@ Jiva-Revision-Counter:
     - chmod 755 ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
     - ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
 
-Jiva-Revision-Counter:
+Jiva-Replica-Network-Delay:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -234,6 +228,7 @@ Jiva-Revision-Counter:
     - ./stages/chaos/Jiva-Replica-Network-Delay/jiva-replica-network-delay
 
 Jiva-Controller-Kill:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -243,6 +238,7 @@ Jiva-Controller-Kill:
     - ./stages/chaos/Jiva-Controller-kill/jiva-controller-kill
 
 Jiva-Controller-Network-Delay:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -252,6 +248,7 @@ Jiva-Controller-Network-Delay:
     - ./stages/chaos/Jiva-Controller-Network-Delay/ctrl-network-delay
 
 Jiva-Replica-Node-Affinity:
+  when: always
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
   dependencies:
@@ -259,6 +256,26 @@ Jiva-Replica-Node-Affinity:
   script:
     - chmod 755 ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
     - ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
+
+cStor-App-kill:
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/cstor-App-pod-kill/app-kill
+    - ./stages/chaos/cstor-App-pod-kill/app-kill
+
+cStor-Target-kill:
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-CHAOS
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/chaos/cstor-Target-kill/target-kill
+    - ./stages/chaos/cstor-Target-kill/target-kill
 
 ## Revert the cluster to previous snapshot
 cluster-cleanup:

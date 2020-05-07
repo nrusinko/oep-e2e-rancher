@@ -59,6 +59,28 @@ fi
 # LitmusBook 2 #
 ################
 
+test_name=$(bash utils/generate_test_name testcase=cstor-snapshotclass metadata="")
+echo $test_name
+
+cd e2e-tests
+
+cp experiments/functional/cstor-csi/cstor-snapshotclass/run_litmus_test.yml cstor-snapshotclass.yml
+
+cat cstor-snapshotclass.yml
+
+bash ../utils/litmus_job_runner label='name:cstor-snapshotclass' job=cstor-snapshotclass.yml
+cd ..
+bash utils/dump_cluster_state;
+bash utils/event_updater jobname:csi-cstor-snapshot $test_name jobid:"$job_id" pipelineid:"$pipeline_id" testcaseid:"$case_id"
+
+if [ "$?" != "0" ]; then
+exit 1;
+fi
+
+################
+# LitmusBook 3 #
+################
+
 echo "*******Performing snapshot litmus test**********"
 
 test_name=$(bash utils/generate_test_name testcase=cstor-csi-snapshot metadata="")
