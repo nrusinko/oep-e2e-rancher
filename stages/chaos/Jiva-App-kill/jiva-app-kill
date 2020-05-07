@@ -11,7 +11,7 @@ export KUBECONFIG=~/.kube/cluster2_config
 
 job_id=$(echo $1)
 pipeline_id=$(echo $2)
-releaseTag=$(echo $3)m
+releaseTag=$(echo $3)
 
 case_id=AUZF
 
