@@ -4,7 +4,7 @@ pod() {
 
 ## Creating Cstor pool using DOP on cluster2
 echo -e "\n************************ Creating Cstor pool ******************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-MIRROR node'
 }
 
 node() {
@@ -13,12 +13,12 @@ node() {
 export KUBECONFIG=~/.kube/cluster2_config
 
 bash utils/pooling jobname:tcid-iuoi02-openebs-install 
-bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Running
+bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-mirror jobphase:Running
 
-kubectl create -f oep-e2e/litmus/director/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE/run_litmus_test.yml
+kubectl create -f oep-e2e/litmus/director/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-MIRROR/run_litmus_test.yml
 kubectl get pods -n litmus 
 
-test_name=create-cstor-pool
+test_name=create-cstor-pool-mirror
 echo -e "\nTest Name: $test_name\n"
 litmus_pod=$(kubectl get po -n litmus | grep $test_name  | awk {'print $1'} | tail -n 1)
 echo $litmus_pod
@@ -38,11 +38,11 @@ echo -e "\nTest Result: $testResult\n"
 if [ "$testResult" != Pass ]
 then
   #export KUBECONFIG=~/.kube/config 
-  bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
+  bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-mirror jobphase:Completed
   exit 1;
 else
   #export KUBECONFIG=~/.kube/config 
-  bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
+  bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-mirror jobphase:Completed
 fi
 
 }

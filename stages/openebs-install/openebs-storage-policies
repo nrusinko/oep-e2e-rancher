@@ -9,7 +9,7 @@ node() {
 export KUBECONFIG=~/.kube/cluster2_config
 
 #pooling over previous job to complete
-bash utils/pooling jobname:tcid-dir-op-cstor-pool-recommend-create-stripe
+bash utils/pooling jobname:tcid-dir-op-cstor-pool-recommend-create-mirror
 bash utils/e2e-cr jobname:openebs-storage-policies jobphase:Running
 
 test_name=$(bash utils/generate_test_name testcase=cstor-storage-policies metadata="")
