@@ -43,18 +43,16 @@ kubectl logs -f $litmus_pod -n litmus
 testResult=$(kubectl get litmusresult ${test_name} --no-headers -o custom-columns=:spec.testStatus.result)
 echo -e "\nTest Result: $testResult\n"
 
+if [[ $branch_name == "readme-update" ]]; then
+  python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
+fi
+
 if [ "$testResult" != Pass ]
 then
   #export KUBECONFIG=~/.kube/config 
-  if [[ $branch_name == "readme-update" ]]; then
-    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
-  fi
   bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
   exit 1;
 else
-  if [[ $branch_name == "readme-update" ]]; then
-    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
-  fi
   #export KUBECONFIG=~/.kube/config 
   bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
 fi
