@@ -46,18 +46,20 @@ echo -e "\nTest Result: $testResult\n"
 if [ "$testResult" != Pass ]
 then
   #export KUBECONFIG=~/.kube/config 
+  if [[ $branch_name == "readme-update" ]]; then
+    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
+  fi
   bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
   exit 1;
 else
+  if [[ $branch_name == "readme-update" ]]; then
+    python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
+  fi
   #export KUBECONFIG=~/.kube/config 
   bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Completed
 fi
 
 }
-
-if [[ $branch_name == "readme-update" ]]; then
-  python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
-fi
 
 if [ "$1" == "node" ];then
   node
