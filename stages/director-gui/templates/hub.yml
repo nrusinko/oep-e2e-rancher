@@ -4,11 +4,11 @@ Parameters:
   
   ClusterName:
     Type: String
-    Default: 'selenium-grid-rancher-ci-release'
+    Default: 'grid-rancher-ci-release'
     Description: Cluster name.
   LogName:
     Type: String
-    Default: 'selenium-grid-rancher-ecs-ci-release'
+    Default: 'grid-rancher-ecs-ci-release'
     Description: Cluster name.
   ContainerCpu:
     Type: Number
@@ -106,7 +106,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
-      Name: !Join ['-', [!Ref 'AWS::StackName', 'drop-1']]
+      Name: !Ref 'AWS::StackName'
       Port: 4444
       Protocol: HTTP
       UnhealthyThresholdCount: 2
