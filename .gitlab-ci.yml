@@ -195,6 +195,24 @@ cStor-xfs-volume-resize:
     - chmod 755 ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
     - ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
 
+LocalPV-device:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/local-pv-device/local-pv-device
+    - ./stages/functional/local-pv-device/local-pv-device
+
+LocalPV-hostpath:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-FUNCTIONAL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/functional/local-pv-hostpath/local-pv-hostpath
+    - ./stages/functional/local-pv-hostpath/local-pv-hostpath
+
 # CHAOS Tests JOB
 
 Jiva-App-Kill:
