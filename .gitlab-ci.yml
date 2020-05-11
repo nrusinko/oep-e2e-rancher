@@ -141,15 +141,6 @@ Jiva-Snapshot:
     - chmod 755 ./stages/functional/Jiva-snapshot/jiva-snapshot
     - ./stages/functional/Jiva-snapshot/jiva-snapshot
 
-Jiva-Snapshot-Clone:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
-    - ./stages/functional/Jiva-Snapshot-Clone/jiva-snapshot-clone
-
 Jiva-Volume-Scaleup:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-FUNCTIONAL
