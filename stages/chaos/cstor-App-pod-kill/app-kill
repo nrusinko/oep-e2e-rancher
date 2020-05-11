@@ -132,7 +132,6 @@ cd e2e-tests
 cp experiments/chaos/app_pod_failure/run_litmus_test.yml appkill.yml
 
 sed -i -e 's/app=jenkins-app/app=app-kill/g' \
--e 's/value: docker/value: containerd/g' \
 -e 's/name: app-failure/name: app-kill/g' \
 -e 's/value: app-jenkins-ns/value: app-kill/g' appkill.yml
 
