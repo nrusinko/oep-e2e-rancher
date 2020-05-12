@@ -4,11 +4,11 @@ Parameters:
   
   ClusterName:
     Type: String
-    Default: 'grid-aws-ci-release'
+    Default: 'grid-rancher-ci-release'
     Description: Cluster name.
   LogName:
     Type: String
-    Default: 'grid-aws-ci-release'
+    Default: 'grid-rancher-ci-release'
     Description: Cluster name.
   ContainerCpu:
     Type: Number
