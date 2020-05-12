@@ -55,14 +55,14 @@ client-components-check:
     - chmod 755 ./stages/cluster-connect/client-components-check
     - ./stages/cluster-connect/client-components-check
 
-tcid-iuoi02-openebs-install:
+TCID-DIR-OP-INSTALL-OPENEBS:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-INSTALL
   dependencies:
     - cluster-create
   script:
-    - chmod 755 ./stages/openebs-install/tcid-iuoi02-openebs-install
-    - ./stages/openebs-install/tcid-iuoi02-openebs-install
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
+    - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
 
 cluster-2-health-check:
   image: harshshekhar15/gitlab-job:v2

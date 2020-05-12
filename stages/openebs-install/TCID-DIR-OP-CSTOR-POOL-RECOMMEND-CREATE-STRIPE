@@ -12,7 +12,7 @@ node() {
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
 
-bash utils/pooling jobname:tcid-iuoi02-openebs-install 
+bash utils/pooling jobname:tcid-dir-op-install-openebs
 bash utils/e2e-cr jobname:tcid-dir-op-cstor-pool-recommend-create-stripe jobphase:Running
 
 kubectl create -f oep-e2e/litmus/director/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE/run_litmus_test.yml
