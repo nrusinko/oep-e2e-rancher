@@ -28,32 +28,32 @@ TCID-DIR-INSTALL-ON-LOCAL-HP:
     - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
     - ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
 
-create-api-key:
-  image: harshshekhar15/gitlab-job:v2
-  stage: CLUSTER-CONNECT
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/cluster-connect/create-apikey
-    - ./stages/cluster-connect/create-apikey
+# create-api-key:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: CLUSTER-CONNECT
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/cluster-connect/create-apikey
+#     - ./stages/cluster-connect/create-apikey
 
-cluster-connect:
-  image: harshshekhar15/gitlab-job:v2
-  stage: CLUSTER-CONNECT
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/cluster-connect/cluster-connect
-    - ./stages/cluster-connect/cluster-connect
+# cluster-connect:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: CLUSTER-CONNECT
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/cluster-connect/cluster-connect
+#     - ./stages/cluster-connect/cluster-connect
 
-client-components-check:
-  image: harshshekhar15/gitlab-job:v2
-  stage: CLUSTER-CONNECT
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/cluster-connect/client-components-check
-    - ./stages/cluster-connect/client-components-check
+# client-components-check:
+#   image: harshshekhar15/gitlab-job:v2
+#   stage: CLUSTER-CONNECT
+#   dependencies:
+#     - cluster-create
+#   script:
+#     - chmod 755 ./stages/cluster-connect/client-components-check
+#     - ./stages/cluster-connect/client-components-check
 
 TCID-DIR-OP-INSTALL-OPENEBS:
   image: harshshekhar15/gitlab-job:v2
