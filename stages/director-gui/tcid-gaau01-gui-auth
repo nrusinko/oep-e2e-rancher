@@ -4,12 +4,12 @@ pod() {
 
 ## Running gui-auth test
 echo -e "\n************************ Running GUI auth test ****************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/tcid-gaau01-gui-auth node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/tcid-gaau01-gui-auth node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
 }
 
 node() {
 
-URL=$(kubectl get cm -n litmus config -o=jsonpath="{.items}{.data.url}")
+URL=$3
 echo -e "\nDOP URL: $URL\n"
 
 CI_PROJECT_NAME=$(echo $1)
@@ -35,7 +35,7 @@ cd ..
 }
 
 if [ "$1" == "node" ];then
-  node $2 $3
+  node $2 $3 $4
 else
   pod
 fi
