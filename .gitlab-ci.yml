@@ -4,10 +4,10 @@ stages:
   - CLUSTER-SETUP
   - INFRA-SETUP
   - CLUSTER-CONNECT
+  - DIRECTOR-GUI
   - OPENEBS-INSTALL
   - OPENEBS-FUNCTIONAL
   - OPENEBS-CHAOS
-  - DIRECTOR-GUI
   - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
