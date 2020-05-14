@@ -38,32 +38,32 @@ selenium-grid-deploy:
     - chmod 755 ./stages/infra-setup/selenium-grid-deploy
     - ./stages/infra-setup/selenium-grid-deploy
 
-# create-api-key:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: CLUSTER-CONNECT
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/cluster-connect/create-apikey
-#     - ./stages/cluster-connect/create-apikey
+create-api-key:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/create-apikey
+    - ./stages/cluster-connect/create-apikey
 
-# cluster-connect:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: CLUSTER-CONNECT
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/cluster-connect/cluster-connect
-#     - ./stages/cluster-connect/cluster-connect
+cluster-connect:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/cluster-connect
+    - ./stages/cluster-connect/cluster-connect
 
-# client-components-check:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: CLUSTER-CONNECT
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/cluster-connect/client-components-check
-#     - ./stages/cluster-connect/client-components-check
+client-components-check:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/client-components-check
+    - ./stages/cluster-connect/client-components-check
 
 TCID-DIR-OP-INSTALL-OPENEBS:
   image: harshshekhar15/gitlab-job:v2
@@ -74,23 +74,23 @@ TCID-DIR-OP-INSTALL-OPENEBS:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
     - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
 
-# cluster-2-health-check:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: OPENEBS-INSTALL
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/openebs-install/cluster-2-health-check
-#     - ./stages/openebs-install/cluster-2-health-check
+cluster-2-health-check:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-INSTALL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/cluster-2-health-check
+    - ./stages/openebs-install/cluster-2-health-check
 
-# TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
-#   image: harshshekhar15/gitlab-job:v2
-#   stage: OPENEBS-INSTALL
-#   dependencies:
-#     - cluster-create
-#   script:
-#     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
-#     - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-INSTALL
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
+    - ./stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 
 OPENEBS-STORAGE-POLICIES:
   image: harshshekhar15/gitlab-job:v2
