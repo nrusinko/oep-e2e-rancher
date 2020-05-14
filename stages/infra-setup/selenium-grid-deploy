@@ -1,0 +1,36 @@
+#!/bin/bash
+
+pod() {
+
+## Deploying selenium--grid
+echo -e "\n************************ Deploying selenium-grid **************************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/infra-setup/selenium-grid-deploy node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"''
+}
+
+node() {
+
+CI_PROJECT_NAME=$(echo $1)
+CI_PIPELINE_ID=$(echo $2)
+GUID=grid-${CI_PROJECT_NAME}-${CI_PIPELINE_ID}
+path=$(pwd)
+
+echo -e "\n[ Cloning gui-automation repo ] ------------------------------------\n"
+git clone https://github.com/mayadata-io/gui-automation.git
+cd gui-automation
+tests_count=`find . -type f -name '*_test.py' -exec grep -e 'def test_' '{}' \; | wc -l`
+echo "Number of GUI test scripts: $tests_count"
+cd ..
+
+cd stages/director-gui/templates
+
+echo -e "\n[ Creating selenium stack ] ----------------------------------------\n"
+aws cloudformation create-stack --stack-name ${GUID} --template-body file://hub.yml --parameters ParameterKey=NumberOfChromeNodes,ParameterValue=$tests_count ParameterKey=ClusterName,ParameterValue=${GUID} ParameterKey=LogName,ParameterValue=${GUID}
+
+cd ../../..
+}
+
+if [ "$1" == "node" ];then
+  node $2 $3
+else
+  pod
+fi

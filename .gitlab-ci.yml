@@ -4,10 +4,10 @@ stages:
   - CLUSTER-SETUP
   - INFRA-SETUP
   - CLUSTER-CONNECT
+  - DIRECTOR-GUI
   - OPENEBS-INSTALL
   - OPENEBS-FUNCTIONAL
   - OPENEBS-CHAOS
-  - DIRECTOR-GUI
   - CLUSTER-CLEANUP
 
 ## Setup kubernetes cluster using Rancher
@@ -27,6 +27,16 @@ TCID-DIR-INSTALL-ON-LOCAL-HP:
   script:
     - chmod 755 ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
     - ./stages/infra-setup/TCID-DIR-INSTALL-ON-LOCAL-HP
+
+## Selenium Grid Spin up
+selenium-grid-deploy:
+  image: harshshekhar15/gitlab-job:v5
+  stage: INFRA-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/infra-setup/selenium-grid-deploy
+    - ./stages/infra-setup/selenium-grid-deploy
 
 create-api-key:
   image: harshshekhar15/gitlab-job:v2
@@ -91,26 +101,88 @@ OPENEBS-STORAGE-POLICIES:
     - chmod 755 ./stages/openebs-install/openebs-storage-policies
     - ./stages/openebs-install/openebs-storage-policies
 
-## Selenium Grid Spin up
-selenium-grid-deploy:
+tcid-gaau01-gui-auth:
   image: harshshekhar15/gitlab-job:v5
   stage: DIRECTOR-GUI
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/selenium-grid-deploy
-    - ./stages/director-gui/selenium-grid-deploy
+    - chmod 755 ./stages/director-gui/tcid-gaau01-gui-auth
+    - ./stages/director-gui/tcid-gaau01-gui-auth
+
+tcid-gacc01-gui-cluster:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gacc01-gui-cluster
+    - ./stages/director-gui/tcid-gacc01-gui-cluster
+
+tcid-gada01-gui-dashboard-home:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gada01-gui-dashboard-home
+    - ./stages/director-gui/tcid-gada01-gui-dashboard-home
+
+tcid-gato01-gui-dashboard-topology:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gato01-gui-dashboard-topology
+    - ./stages/director-gui/tcid-gato01-gui-dashboard-topology
+
+gui-dashboard:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/gui-dashboard
+    - ./stages/director-gui/gui-dashboard
+
+tcid-gaal01-gui-dashboard-alerts:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gaal01-gui-dashboard-alerts
+    - ./stages/director-gui/tcid-gaal01-gui-dashboard-alerts
+
+tcid-galo01-gui-dashboard-logs:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-galo01-gui-dashboard-logs
+    - ./stages/director-gui/tcid-galo01-gui-dashboard-logs
+
+tcid-gada02-gui-dashboard-overview:
+  image: harshshekhar15/gitlab-job:v5
+  stage: DIRECTOR-GUI
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/director-gui/tcid-gada02-gui-dashboard-overview
+    - ./stages/director-gui/tcid-gada02-gui-dashboard-overview
 
 ## Selenium Grid Clean up
 selenium-grid-cleanup:
   when: always
   image: harshshekhar15/gitlab-job:v5
-  stage: DIRECTOR-GUI
+  stage: CLUSTER-CLEANUP
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/selenium-grid-cleanup
-    - ./stages/director-gui/selenium-grid-cleanup
+    - chmod 755 ./stages/cluster-cleanup/selenium-grid-cleanup
+    - ./stages/cluster-cleanup/selenium-grid-cleanup
 
 e2e-metrics:
   when: always
