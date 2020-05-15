@@ -4,19 +4,14 @@ pod() {
 
 ## Creating Cstor pool using DOP on cluster2
 echo -e "\n************************ Creating Cstor pool ******************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node' "'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"' '"'$CI_JOB_ID'"' '"'$GITHUB_TOKEN'"' '"'$CI_COMMIT_REF_NAME'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node '"'$CI_JOB_ID'"' '"'$GITHUB_TOKEN'"' '"'$CI_COMMIT_REF_NAME'"''
 }
 
 node() {
 
-GITHUB_USERNAME=$1
-GITHUB_PASSWORD=$2
-RELEASE_USERNAME=$3
-RELEASE_PASSWORD=$4
-RELEASE=$5
-CI_JOB_ID=$6
-GITHUB_TOKEN=$7
-CI_COMMIT_REF_NAME=$8
+CI_JOB_ID=$1
+GITHUB_TOKEN=$2
+CI_COMMIT_REF_NAME=$3
 
 job_id=$(echo $CI_JOB_ID)
 gittoken=$(echo "$GITHUB_TOKEN")
@@ -69,7 +64,7 @@ fi
 }
 
 if [ "$1" == "node" ];then
-  node $2 $3 $4 $5 $6 $7 $8 $9
+  node $2 $3 $4
 else
   pod
 fi
