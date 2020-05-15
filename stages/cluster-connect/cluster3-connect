@@ -12,6 +12,9 @@ node() {
 bash utils/pooling jobname:trrc01-cluster-connect
 bash utils/e2e-cr jobname:trrc01-cluster3-connect jobphase:Running
 
+URL=http://$(kubectl get nodes -o wide --no-headers | awk {'print $6'} | tail -n 1)
+echo "URL to access DOP: $URL"
+
 # Use cluster3 kube config
 export KUBECONFIG=~/.kube/cluster3_config
 
@@ -23,6 +26,10 @@ kubectl apply -f oep-e2e/litmus/prerequisite/docker-secret.yml
 
 echo -e "\n[ Applying DOP user credentials secret ]-----------------------------------------------\n"
 kubectl create -f secret.yaml -n litmus
+
+# Create a configmap from URL
+echo -e "\n[ Create configmap for DOP URL ]-------------------------------------------------------\n"
+kubectl create configmap config --from-literal=url=$URL -n litmus
 
 echo -e "\n[ Updating cluster name in litmus job ]------------------------------------------------\n"
 sed 's|value: oep-cluster|value: oep-cluster3|' -i oep-e2e/litmus/director/cluster-connect/run_litmus_test.yml
