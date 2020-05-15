@@ -4,10 +4,26 @@ pod() {
 
 ## Creating Cstor pool using DOP on cluster2
 echo -e "\n************************ Creating Cstor pool ******************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/openebs-install/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE node' "'$GITHUB_USERNAME'"' '"'$GITHUB_PASSWORD'"' '"'$RELEASE_USERNAME'"' '"'$RELEASE_PASSWORD'"' '"'$RELEASE'"' '"'$CI_JOB_ID'"' '"'$GITHUB_TOKEN'"' '"'$CI_COMMIT_REF_NAME'"''
 }
 
 node() {
+
+GITHUB_USERNAME=$1
+GITHUB_PASSWORD=$2
+RELEASE_USERNAME=$3
+RELEASE_PASSWORD=$4
+RELEASE=$5
+CI_JOB_ID=$6
+GITHUB_TOKEN=$7
+CI_COMMIT_REF_NAME=$8
+
+job_id=$(echo $CI_JOB_ID)
+gittoken=$(echo "$GITHUB_TOKEN")
+current_time=$(date)
+branch_name=$CI_COMMIT_REF_NAME
+stage="OPENEBS-INSTALL"
+test_desc="Verify creation of stripe cstor pool cluster"
 
 # Use cluster2 kube config
 export KUBECONFIG=~/.kube/cluster2_config
@@ -19,6 +35,7 @@ kubectl create -f oep-e2e/litmus/director/TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREAT
 kubectl get pods -n litmus 
 
 test_name=create-cstor-pool
+job_name=TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE
 echo -e "\nTest Name: $test_name\n"
 litmus_pod=$(kubectl get po -n litmus | grep $test_name  | awk {'print $1'} | tail -n 1)
 echo $litmus_pod
@@ -34,6 +51,10 @@ done
 kubectl logs -f $litmus_pod -n litmus
 testResult=$(kubectl get litmusresult ${test_name} --no-headers -o custom-columns=:spec.testStatus.result)
 echo -e "\nTest Result: $testResult\n"
+echo $branch_name
+if [[ $branch_name == "oep-release" ]]; then
+  python3 oep-e2e/utils/result_update.py --job_id "$job_id" --stage "$stage" --test_desc "$test_desc" --test_result "$testResult" --time_stamp "$current_time" --token "$gittoken" --test_name "$test_name" --job_name "$job_name" --platform "rancher"
+fi
 
 if [ "$testResult" != Pass ]
 then
@@ -48,7 +69,7 @@ fi
 }
 
 if [ "$1" == "node" ];then
-  node
+  node $2 $3 $4 $5 $6 $7 $8 $9
 else
   pod
 fi
