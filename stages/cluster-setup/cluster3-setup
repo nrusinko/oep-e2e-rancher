@@ -42,6 +42,9 @@ echo -e "\n[ Print 'k8s version' ] ---------------------------------------------
 version=$(sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'export KUBECONFIG=~/.kube/cluster3_config && kubectl get nodes -o=jsonpath='{.items[0].status.nodeInfo.kubeletVersion}'')
 echo -e "KubernetesVersion: $version"
 
+echo -e "\n************************ Cloning oep-e2e-rancher repo *********************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone -b '$CI_COMMIT_REF_NAME' https://github.com/mayadata-io/oep-e2e-rancher.git'
+
 echo -e "\n************************ Applying e2e-crd *********************************************\n"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'export KUBECONFIG=~/.kube/cluster3_config && kubectl apply -f oep-e2e-rancher/utils/e2e-crd.yml'
 
