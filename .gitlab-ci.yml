@@ -18,6 +18,13 @@ cluster-create:
     - chmod 755 ./stages/cluster-setup/setup
     - ./stages/cluster-setup/setup
 
+cluster3-create:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-SETUP
+  script:
+    - chmod 755 ./stages/cluster-setup/cluster3-setup
+    - ./stages/cluster-setup/cluster3-setup
+
 ## Deploy Director On-Prem
 TCID-DIR-INSTALL-ON-LOCAL-HP:
   image: harshshekhar15/gitlab-job:v2
@@ -64,6 +71,24 @@ client-components-check:
   script:
     - chmod 755 ./stages/cluster-connect/client-components-check
     - ./stages/cluster-connect/client-components-check
+
+cluster3-connect:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/cluster3-connect
+    - ./stages/cluster-connect/cluster3-connect
+
+client3-components-check:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CONNECT
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-connect/client3-components-check
+    - ./stages/cluster-connect/client3-components-check
 
 TCID-DIR-OP-INSTALL-OPENEBS:
   image: harshshekhar15/gitlab-job:v2
@@ -378,3 +403,13 @@ cluster2-cleanup:
   script:
     - chmod 755 ./stages/cluster-cleanup/cluster2-cleanup
     - ./stages/cluster-cleanup/cluster2-cleanup
+
+cluster3-cleanup:
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  dependencies:
+    - cluster-create
+  stage: CLUSTER-CLEANUP
+  script:
+    - chmod 755 ./stages/cluster-cleanup/cluster3-cleanup
+    - ./stages/cluster-cleanup/cluster3-cleanup

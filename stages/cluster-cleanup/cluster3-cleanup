@@ -1,0 +1,82 @@
+#!/bin/bash
+
+pod() {
+
+## Cleaning up the connected cluster
+echo -e "\n************************ Cleaning up the connected cluster ****************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/cluster-cleanup/cluster3-cleanup node '"'$cluster3_master_name'"' '"'$cluster3_worker1_name'"' '"'$cluster3_worker2_name'"' '"'$cluster3_worker3_name'"' '"'$cluster3_worker4_name'"' '"'$cluster3_worker5_name'"' '"'$C3_SNAPSHOT_NAME'"' '"'$C3_VM_PASS'"' '"'$VM_USER'"' '"'$C3_VM1_IP'"' '"'$C3_VM2_IP'"' '"'$C3_VM3_IP'"' '"'$C3_VM4_IP'"' '"'$C3_VM5_IP'"' '"'$C3_VM6_IP'"' '"'$C3_ESX_IP'"''
+}
+
+node() {
+
+cluster3_master_name=$(echo $1)
+cluster3_worker1_name=$(echo $2)
+cluster3_worker2_name=$(echo $3)
+cluster3_worker3_name=$(echo $4)
+cluster3_worker4_name=$(echo $5)
+cluster3_worker5_name=$(echo $6)
+C3_SNAPSHOT_NAME=$(echo $7)
+C3_VM_PASS=$8
+VM_USER=$9
+C3_VM1_IP=${10}
+C3_VM2_IP=${11}
+C3_VM3_IP=${12}
+C3_VM4_IP=${13}
+C3_VM5_IP=${14}
+C3_VM6_IP=${15}
+C3_ESX_IP=${16}
+
+mkdir cluster3-cleanup
+cd cluster3-cleanup
+
+echo -e "\n[ Cloning Litmus repo ]------------------------------------------\n"
+git clone https://github.com/openebs/e2e-tests.git
+
+## Replace the VM names in csv file
+sed -i -e "s/auto1/$cluster3_master_name/g" \
+-e "s/auto2/$cluster3_worker1_name/g" \
+-e "s/auto3/$cluster3_worker2_name/g" \
+-e "s/auto4/$cluster3_worker3_name/g" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
+
+sed -i "/$cluster3_worker3_name/a \
+$cluster3_worker4_name \
+" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
+
+sed -i "/$cluster3_worker4_name/a \
+$cluster3_worker5_name \
+" e2e-tests/k8s/on-prem/openshift-installer/vm_name.csv
+
+
+## Replace the snapshot name and ESX ip in vars
+sed -i -e 's/snapshot_name: "oc-cluster"/snapshot_name: "'$C3_SNAPSHOT_NAME'"/g' \
+-e 's/esx_ip: "10.12.1.1"/esx_ip: "'$C3_ESX_IP'"/g' e2e-tests/k8s/on-prem/openshift-installer/vars.yml
+
+echo -e "\n[ Reverting the cluster ]----------------------------------------\n"
+ansible-playbook e2e-tests/k8s/on-prem/openshift-installer/revert_cluster_state.yml
+
+## Add sleep so that the VM's are ready
+sleep 10
+
+echo -e "\n[ Rebooting the VM's ]-------------------------------------------\n"
+echo "Rebooting VM : $C3_VM1_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM1_IP 'reboot' > /dev/null 2>&1 &
+echo "Rebooting VM : $C3_VM2_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM2_IP 'reboot' > /dev/null 2>&1 &
+echo "Rebooting VM : $C3_VM3_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM3_IP 'reboot' > /dev/null 2>&1 &
+echo "Rebooting VM : $C3_VM4_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM4_IP 'reboot' > /dev/null 2>&1 &
+echo "Rebooting VM : $C3_VM5_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM5_IP 'reboot' > /dev/null 2>&1 &
+echo "Rebooting VM : $C3_VM6_IP"
+sshpass -p $C3_VM_PASS ssh $VM_USER@$C3_VM6_IP 'reboot' > /dev/null 2>&1 &
+
+## Add sleep so that the cluster becomes available for next pipeline
+sleep 50
+}
+
+if [ "$1" == "node" ];then
+  node $2 $3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13} ${14} ${15} ${16} ${17}
+else
+  pod
+fi
