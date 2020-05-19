@@ -126,14 +126,15 @@ OPENEBS-STORAGE-POLICIES:
     - chmod 755 ./stages/openebs-install/openebs-storage-policies
     - ./stages/openebs-install/openebs-storage-policies
 
+## GUI Checks
 TCID-GUI-AUTH:
   image: harshshekhar15/gitlab-job:v5
   stage: DIRECTOR-GUI
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/gui-auth-check
-    - ./stages/director-gui/gui-auth-check
+    - chmod 755 ./stages/director-gui/gui-auth
+    - ./stages/director-gui/gui-auth
 
 TCID-GUI-CLUSTER:
   image: harshshekhar15/gitlab-job:v5
@@ -141,8 +142,8 @@ TCID-GUI-CLUSTER:
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/gui-cluster-check
-    - ./stages/director-gui/gui-cluster-check
+    - chmod 755 ./stages/director-gui/gui-cluster
+    - ./stages/director-gui/gui-cluster
 
 TCID-GUI-DASHBOARD:
   image: harshshekhar15/gitlab-job:v5
@@ -150,8 +151,8 @@ TCID-GUI-DASHBOARD:
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/gui-dashboard-check
-    - ./stages/director-gui/gui-dashboard-check
+    - chmod 755 ./stages/director-gui/gui-dashboard
+    - ./stages/director-gui/gui-dashboard
 
 TCID-GUI-PROFILE:
   image: harshshekhar15/gitlab-job:v5
@@ -159,8 +160,8 @@ TCID-GUI-PROFILE:
   dependencies:
     - TCID-DIR-INSTALL-ON-LOCAL-HP
   script:
-    - chmod 755 ./stages/director-gui/gui-profile-check
-    - ./stages/director-gui/gui-profile-check
+    - chmod 755 ./stages/director-gui/gui-profile
+    - ./stages/director-gui/gui-profile
 
 
 ## Selenium Grid Clean up

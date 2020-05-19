@@ -2,9 +2,9 @@
 
 pod() {
 
-## Running gui-auth test
-echo -e "\n************************ Running GUI auth test ****************************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/gui-auth-check node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
+## Running gui-dashboard test
+echo -e "\n************************ Running GUI dashboard test ***********************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/gui-profile node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
 }
 
 node() {
@@ -18,7 +18,6 @@ GUID=grid-${CI_PROJECT_NAME}-${CI_PIPELINE_ID}
 
 output=`aws cloudformation describe-stacks --stack-name $GUID --query Stacks[].Outputs[].OutputValue | sed -r 's/"+//g'`
 grid=`echo $output | awk {'print $2'}`
-echo -e "\nGRID: $grid\n"
 
 cd gui-automation
 
@@ -28,8 +27,8 @@ cd gui-automation
 
 python3.7 -m pip install -r requirements.txt
 
-#Running tests with auth marker
-python3.7 -m pytest -m auth --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
+#Running tests with profile marker
+python3.7 -m pytest -m profile --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
 
 cd ..
 }
