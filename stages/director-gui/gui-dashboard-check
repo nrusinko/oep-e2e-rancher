@@ -2,9 +2,9 @@
 
 pod() {
 
-## Running gui-dashboard-alerts test
-echo -e "\n************************ Running GUI dashboard-alerts test ****************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/tcid-gaal01-gui-dashboard-alerts node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
+## Running gui-dashboard test
+echo -e "\n************************ Running GUI dashboard test ***********************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/gui-dashboard-check node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
 }
 
 node() {
@@ -27,8 +27,8 @@ cd gui-automation
 
 python3.7 -m pip install -r requirements.txt
 
-#Running tests with gaal01 marker
-python3.7 -m pytest -m gaal01 --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
+#Running tests with dashboard marker
+python3.7 -m pytest -m dashboard --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
 
 cd ..
 }

@@ -2,9 +2,9 @@
 
 pod() {
 
-## Running gui-dashboard-overview test
-echo -e "\n************************ Running GUI dashboard-overview test **************************\n"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/tcid-gada02-gui-dashboard-overview node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
+## Running gui-dashboard test
+echo -e "\n************************ Running GUI dashboard test ***********************************\n"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd oep-e2e-rancher && bash stages/director-gui/gui-profile-check node '"'$CI_PROJECT_NAME'"' '"'$CI_PIPELINE_ID'"' '"'$DOP_URL'"''
 }
 
 node() {
@@ -27,8 +27,8 @@ cd gui-automation
 
 python3.7 -m pip install -r requirements.txt
 
-#Running tests with gada02 marker
-python3.7 -m pytest -m gada02 --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
+#Running tests with profile marker
+python3.7 -m pytest -m profile --url $URL --environment remote --hub "$grid" -v --tests-per-worker 10 --reruns 1 --html=./results/report.html
 
 cd ..
 }
