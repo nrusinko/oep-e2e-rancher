@@ -106,6 +106,42 @@ TCID-DIR-OP-INSTALL-OPENEBS:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
     - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
 
+TCID-DIR-OP-INSTALL-OPENEBS-CP-ON-SPECIFIC-NODE:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-CP-ON-SPECIFIC-NODE
+    - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-CP-ON-SPECIFIC-NODE
+
+TCID-DIR-OP-INSTALL-OPENEBS-DP-ON-SPECIFIC-NODE:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-DP-ON-SPECIFIC-NODE
+    - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-DP-ON-SPECIFIC-NODE
+
+TCID-DIR-OP-RE-INSTALL-OPENEBS:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-RE-INSTALL-OPENEBS
+    - ./stages/openebs-install/TCID-DIR-OP-RE-INSTALL-OPENEBS
+
+TCID-DIR-OP-INSTALL-OPENEBS-LIMIT-RESOURCE:
+  image: harshshekhar15/gitlab-job:v2
+  stage: OPENEBS-SETUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-LIMIT-RESOURCE
+    - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS-LIMIT-RESOURCE
+
 TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-SETUP
