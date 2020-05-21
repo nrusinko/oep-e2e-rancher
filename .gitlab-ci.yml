@@ -18,6 +18,13 @@ cluster-create:
     - chmod 755 ./stages/cluster-setup/setup
     - ./stages/cluster-setup/setup
 
+cluster2-create:
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-SETUP
+  script:
+    - chmod 755 ./stages/cluster-setup/cluster2-setup
+    - ./stages/cluster-setup/cluster2-setup
+
 cluster3-create:
   image: harshshekhar15/gitlab-job:v2
   stage: CLUSTER-SETUP
@@ -99,15 +106,6 @@ TCID-DIR-OP-INSTALL-OPENEBS:
     - chmod 755 ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
     - ./stages/openebs-install/TCID-DIR-OP-INSTALL-OPENEBS
 
-cluster-2-health-check:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-SETUP
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/openebs-install/cluster-2-health-check
-    - ./stages/openebs-install/cluster-2-health-check
-
 TCID-DIR-OP-CSTOR-POOL-RECOMMEND-CREATE-STRIPE:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-SETUP
@@ -162,28 +160,6 @@ TCID-GUI-PROFILE:
   script:
     - chmod 755 ./stages/director-gui/gui-profile
     - ./stages/director-gui/gui-profile
-
-
-## Selenium Grid Clean up
-selenium-grid-cleanup:
-  when: always
-  image: harshshekhar15/gitlab-job:v5
-  stage: CLUSTER-CLEANUP
-  dependencies:
-    - TCID-DIR-INSTALL-ON-LOCAL-HP
-  script:
-    - chmod 755 ./stages/cluster-cleanup/selenium-grid-cleanup
-    - ./stages/cluster-cleanup/selenium-grid-cleanup
-
-e2e-metrics:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: CLUSTER-CLEANUP
-  dependencies:
-    - cluster-create
-  script:
-    - chmod 755 ./stages/cluster-cleanup/e2e-metrics
-    - ./stages/cluster-cleanup/e2e-metrics
 
 ## Functional Tests
 Jiva-App-Target-Affinity:
@@ -348,6 +324,27 @@ cStor-Target-kill:
   script:
     - chmod 755 ./stages/chaos/cstor-Target-kill/target-kill
     - ./stages/chaos/cstor-Target-kill/target-kill
+
+## Selenium Grid Clean up
+selenium-grid-cleanup:
+  when: always
+  image: harshshekhar15/gitlab-job:v5
+  stage: CLUSTER-CLEANUP
+  dependencies:
+    - TCID-DIR-INSTALL-ON-LOCAL-HP
+  script:
+    - chmod 755 ./stages/cluster-cleanup/selenium-grid-cleanup
+    - ./stages/cluster-cleanup/selenium-grid-cleanup
+
+e2e-metrics:
+  when: always
+  image: harshshekhar15/gitlab-job:v2
+  stage: CLUSTER-CLEANUP
+  dependencies:
+    - cluster-create
+  script:
+    - chmod 755 ./stages/cluster-cleanup/e2e-metrics
+    - ./stages/cluster-cleanup/e2e-metrics
 
 ## Revert the cluster to previous snapshot
 cluster-cleanup:
