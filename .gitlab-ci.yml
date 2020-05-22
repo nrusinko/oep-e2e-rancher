@@ -161,166 +161,122 @@ TCID-GUI-PROFILE:
     - chmod 755 ./stages/director-gui/gui-profile
     - ./stages/director-gui/gui-profile
 
-## Functional Tests
-Jiva-App-Target-Affinity:
-  image: harshshekhar15/gitlab-job:v2
+## OpenEBS Functional Tests
+
+.func_test_template:
+  image: harshshekhar15/gitlab-job:v5
   stage: OPENEBS-FUNCTIONAL
+  when: always
   dependencies:
-    - cluster-create
+    - TCID-DIR-OP-INSTALL-OPENEBS
+
+Jiva-App-Target-Affinity:
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/Jiva-App-Target-Affinity/app-target-affinity
     - ./stages/functional/Jiva-App-Target-Affinity/app-target-affinity
 
 Jiva-Snapshot:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/Jiva-snapshot/jiva-snapshot
     - ./stages/functional/Jiva-snapshot/jiva-snapshot
 
 Jiva-Volume-Scaleup:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
     - ./stages/functional/Jiva-Volume-Scaleup/jiva-vol-scaleup
 
 cStor-csi-volume-snapshot:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/cstor-csi-volume-snapshot/csi-cstor-snapshot
     - ./stages/functional/cstor-csi-volume-snapshot/csi-cstor-snapshot
 
 cStor-csi-volume-clone:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/cstor-csi-volume-clone/csi-cstor-clone
     - ./stages/functional/cstor-csi-volume-clone/csi-cstor-clone
 
 cStor-ext4-volume-resize:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/cstor-ext4-volume-resize/csi-volume-resize
     - ./stages/functional/cstor-ext4-volume-resize/csi-volume-resize
 
 cStor-xfs-volume-resize:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
     - ./stages/functional/cstor-xfs-volume-resize/csi-volume-resize-xfs
 
 LocalPV-device:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/local-pv-device/local-pv-device
     - ./stages/functional/local-pv-device/local-pv-device
 
 LocalPV-hostpath:
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-FUNCTIONAL
-  dependencies:
-    - cluster-create
+  extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/local-pv-hostpath/local-pv-hostpath
     - ./stages/functional/local-pv-hostpath/local-pv-hostpath
 
-# CHAOS Tests JOB
+# OpenEBS CHAOS Tests JOBS
 
-Jiva-App-Kill:
-  when: always
+.chaos_test_template:
   image: harshshekhar15/gitlab-job:v2
   stage: OPENEBS-CHAOS
+  when: always
   dependencies:
-    - cluster-create
+    - TCID-DIR-OP-INSTALL-OPENEBS
+
+Jiva-App-Kill:
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-App-kill/jiva-app-kill
     - ./stages/chaos/Jiva-App-kill/jiva-app-kill
 
 Jiva-Revision-Counter:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
     - ./stages/chaos/Jiva-revision-counter/jiva-revision-counter
 
 Jiva-Replica-Network-Delay:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-Replica-Network-Delay/jiva-replica-network-delay
     - ./stages/chaos/Jiva-Replica-Network-Delay/jiva-replica-network-delay
 
 Jiva-Controller-Kill:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-Controller-kill/jiva-controller-kill
     - ./stages/chaos/Jiva-Controller-kill/jiva-controller-kill
 
 Jiva-Controller-Network-Delay:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-Controller-Network-Delay/ctrl-network-delay
     - ./stages/chaos/Jiva-Controller-Network-Delay/ctrl-network-delay
 
 Jiva-Replica-Node-Affinity:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
     - ./stages/chaos/Jiva-Replica-Node-Affinity/rep-node-affinity
 
 cStor-App-kill:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/cstor-App-pod-kill/app-kill
     - ./stages/chaos/cstor-App-pod-kill/app-kill
 
 cStor-Target-kill:
-  when: always
-  image: harshshekhar15/gitlab-job:v2
-  stage: OPENEBS-CHAOS
-  dependencies:
-    - cluster-create
+  extends: .chaos_test_template
   script:
     - chmod 755 ./stages/chaos/cstor-Target-kill/target-kill
     - ./stages/chaos/cstor-Target-kill/target-kill
