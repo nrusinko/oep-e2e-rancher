@@ -115,7 +115,7 @@ cp experiments/chaos/openebs_target_failure/run_litmus_test.yml run_target_kill_
 sed -i -e 's/value: percona-mysql-claim/value: openebs-bb-targetkill/g' \
 -e 's/value: '\''name=percona'\''/value: '\''app=target-kill'\''/g' \
 -e 's/target-zrepl-kill/target-delete/g' \
--e '/name: TARGET_AFFINITY_CHECK/{n;s/value: enable/value: disable/g}' \
+-e "/name: TARGET_AFFINITY_CHECK/{n;s/value: 'enable'/value: 'disable'/g}" \
 -e 's/value: app-percona-ns/value: target-kill/g' run_target_kill_test.yml
 
 sed -i '/command:/i \
