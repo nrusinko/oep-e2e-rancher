@@ -170,7 +170,7 @@ TCID-GUI-PROFILE:
   dependencies:
     - TCID-DIR-OP-INSTALL-OPENEBS
 
-TCID-Jiva-APP-TARGET-AFFINITY:
+TCID-JIVA-APP-TARGET-AFFINITY:
   extends: .func_test_template
   script:
     - chmod 755 ./stages/functional/Jiva-App-Target-Affinity/app-target-affinity
