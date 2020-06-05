@@ -15,19 +15,14 @@ GUID=grid-${CI_PROJECT_NAME}-${CI_PIPELINE_ID}
 path=$(pwd)
 
 echo -e "\n[ Cloning gui-automation repo ] ------------------------------------\n"
-git clone https://github.com/mayadata-io/gui-automation.git
-cd gui-automation
-#tests_count=`find . -type f -name '*_test.py' -exec grep -e 'def test_' '{}' \; | wc -l`
-tests_count=25
-echo "Number of GUI test scripts: $tests_count"
-cd ..
-
-cd stages/director-gui/templates
+git clone https://$username:$password@github.com/mayadata-io/gui-automation.git
+cd gui-automation/scripts/grid
+cat scripts/grid/selenium-grid-config.yml
 
 echo -e "\n[ Creating selenium stack ] ----------------------------------------\n"
-aws cloudformation create-stack --stack-name ${GUID} --template-body file://hub.yml --parameters ParameterKey=NumberOfChromeNodes,ParameterValue=$tests_count ParameterKey=ClusterName,ParameterValue=${GUID} ParameterKey=LogName,ParameterValue=${GUID}
+bash scripts/grid/configure-grid.sh ${GUID} eu-west-2
 
-cd ../../..
+cd ..
 }
 
 if [ "$1" == "node" ];then
